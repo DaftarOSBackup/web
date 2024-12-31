@@ -165,11 +165,27 @@ const sections = [
   { id: "report", label: "Report" }
 ]
 
+// Add interface for meeting details
+interface MeetingDetails {
+  agenda: string;
+  date: string;
+  time: string;
+  location: string;
+  program: string;
+  collaboration: string;
+  pitchName: string;
+  daftarName: string;
+  attendees: string[];
+  status: string;
+  name: string;
+  // Add other meeting properties as needed
+}
+
 export default function PitchDetailsPage({ params }: { params: { slug: string; pitchId: string } }) {
   const [activeSection, setActiveSection] = useState("investors-note")
   const [selectedDocType, setSelectedDocType] = useState("private")
   const [selectedMeeting, setSelectedMeeting] = useState<string | null>(null)
-  const [selectedMeetingDetails, setSelectedMeetingDetails] = useState(null)
+  const [selectedMeetingDetails, setSelectedMeetingDetails] = useState<MeetingDetails | null>(null)
     const [reportDialogOpen, setReportDialogOpen] = useState(false)
   const [scheduleMeetingOpen, setScheduleMeetingOpen] = useState(false)
   const router = useRouter()
@@ -179,7 +195,7 @@ export default function PitchDetailsPage({ params }: { params: { slug: string; p
       const meetingDetails = pitchDetails.sections.meetings.find(
         meeting => meeting.id === selectedMeeting
       )
-      setSelectedMeetingDetails(meetingDetails)
+      setSelectedMeetingDetails(meetingDetails || null)
     }
   }, [selectedMeeting])
 
@@ -250,7 +266,7 @@ export default function PitchDetailsPage({ params }: { params: { slug: string; p
                 >
                   <span className="capitalize">{type}</span>
                   <span className="ml-auto text-xs text-muted-foreground">
-                    {pitchDetails.sections.documentation[type].length}
+                    {pitchDetails.sections.documentation[type as keyof typeof pitchDetails.sections.documentation].length}
                   </span>
                 </Button>
               ))}
@@ -258,7 +274,7 @@ export default function PitchDetailsPage({ params }: { params: { slug: string; p
 
             {/* Documents List */}
             <div className="flex-1 space-y-3">
-              {pitchDetails.sections.documentation[selectedDocType].map((doc) => (
+              {pitchDetails.sections.documentation[selectedDocType as keyof typeof pitchDetails.sections.documentation].map((doc) => (
                 <div 
                   key={doc.id}
                   className="flex items-center justify-between p-4 border rounded-[0.3rem]"
