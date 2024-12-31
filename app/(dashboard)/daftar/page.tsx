@@ -82,7 +82,7 @@ export default function DaftarPage() {
             <Input placeholder="Search daftars..." className="pl-8 w-[200px] h-9 text-sm" />
           </div>
 
-          <Button size="sm" className="h-9 bg-blue-600 hover:bg-blue-700">
+          <Button size="sm" className="h-9 bg-blue-600 hover:bg-blue-700 text-white">
             New Daftar
           </Button>
           <Link href="/pitch-board">

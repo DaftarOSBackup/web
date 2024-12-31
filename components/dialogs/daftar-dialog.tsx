@@ -225,7 +225,7 @@ export function DaftarDialog({ open, onOpenChange }: DaftarDialogProps) {
                         <Button 
                           size="sm"
                           onClick={() => setIsEditing(true)}
-                          className="bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                          className="bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                         >
                           Edit Profile
                         </Button>
@@ -337,7 +337,7 @@ export function DaftarDialog({ open, onOpenChange }: DaftarDialogProps) {
                           onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                         />
                         <Button 
-                          className="w-full bg-blue-600 hover:bg-blue-700"
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                           onClick={handleSendInvite}
                         >
                           Send Invite

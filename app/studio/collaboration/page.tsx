@@ -70,7 +70,7 @@ export default function CollaborationPage() {
         </label>
         <div className="flex items-center gap-2">
           <Input placeholder="Enter Daftar ID" className="" />
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white">
             Add Collaborator
           </Button>
         </div>

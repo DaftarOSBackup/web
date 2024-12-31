@@ -155,7 +155,7 @@ export function TeamDialog({ open, onOpenChange }: TeamDialogProps) {
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                   />
                   <Button 
-                    className="w-full bg-blue-600 hover:bg-blue-700"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                     onClick={handleSendInvite}
                   >
                     Send Invite

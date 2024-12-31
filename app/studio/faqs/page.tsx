@@ -68,7 +68,7 @@ export default function FAQsPage() {
           <div className="flex justify-end">
             <Button
               onClick={handleAddFAQ}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               Add FAQ
             </Button>
@@ -117,7 +117,7 @@ export default function FAQsPage() {
         <div className="flex justify-center pt-4">
           <Button 
             onClick={handleSave}
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
           >
             Save
           </Button>

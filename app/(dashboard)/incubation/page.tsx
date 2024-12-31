@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, Calendar, Bookmark, BookmarkCheck, Users, Target, BarChart2 } from "lucide-react"
+import { Search, Filter, Calendar, Bookmark } from "lucide-react"
 import {
   Select,
   SelectContent,
@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { cn } from "@/lib/utils"
+import {BookmarkFilled} from "@/components/icons"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import torrickeBarton from "@/public/assets/torricke-barton.jpg"
@@ -90,7 +90,7 @@ export default function IncubationPage() {
               className="h-9"
             >
               {showBookmarked ? (
-                <BookmarkCheck className="h-4 w-4" />
+                <BookmarkFilled className="h-4 w-4" />
               ) : (
                 <Bookmark className="h-4 w-4" />
               )}
@@ -132,7 +132,7 @@ export default function IncubationPage() {
                     className="absolute -top-3 -left-3 h-8 w-8 bg-background border rounded-[0.3rem] z-10 hover:bg-background"
                   >
                     {bookmarkedPrograms.has(program.name) ? (
-                      <BookmarkCheck className="h-4 w-4" />
+                      <BookmarkFilled className="h-4 w-4" />
                     ) : (
                       <Bookmark className="h-4 w-4" />
                     )}

@@ -276,7 +276,7 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                           <Button 
                             size="sm"
                             onClick={handleSave}
-                            className="bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                            className="bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                           >
                             Save Changes
                           </Button>
@@ -285,7 +285,7 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                         <Button 
                           size="sm"
                           onClick={() => setIsEditing(true)}
-                          className="bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                          className="bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                         >
                           Edit Profile
                         </Button>
@@ -320,7 +320,7 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                       <Button 
                         size="sm"
                         onClick={handleFeatureSubmit}
-                        className="h-8 bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                        className="h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                       >
                         Submit Request
                       </Button>
@@ -479,7 +479,7 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                           <Button 
                             size="sm"
                             onClick={handleSave}
-                            className="h-8 bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                            className="h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                           >
                             Save Changes
                           </Button>
@@ -488,7 +488,7 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                         <Button 
                           size="sm"
                           onClick={() => setIsEditing(true)}
-                          className="h-8 bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                          className="h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                         >
                           Edit Company
                         </Button>
@@ -513,7 +513,7 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                     <div className="flex justify-center">
                       <Button 
                         size="sm"
-                        className="h-8 bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                        className="h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                       >
                         Add Team Member
                       </Button>

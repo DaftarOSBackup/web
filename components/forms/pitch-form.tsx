@@ -255,7 +255,7 @@ export function PitchForm({ programDetails }: PitchFormProps) {
             <Button
               onClick={handleSubmit}
               size="sm"
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               Submit Pitch
             </Button>

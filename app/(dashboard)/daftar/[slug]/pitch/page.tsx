@@ -65,7 +65,7 @@ export default function NewPitchPage({ params }: { params: { daftarId: string } 
                         <span className="text-xs text-muted-foreground"> {new Date(pitchDetails.submittedDate).toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' })}</span>
                     </div>
 
-                    <Button size="sm" className=" bg-blue-600 hover:bg-blue-700">
+                    <Button size="sm" className=" bg-blue-600 hover:bg-blue-700 text-white">
                         Withdraw Pitch
                     </Button>
                 </div>

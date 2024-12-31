@@ -77,7 +77,7 @@ export default function PitchBoardPage() {
                         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input placeholder="Search pitches..." className="pl-8 w-[200px]" />
                     </div>
-                    <Button size="sm" className="h-9 bg-blue-600 hover:bg-blue-700">
+                    <Button size="sm" className="h-9 bg-blue-600 hover:bg-blue-700 text-white">
                         New Daftar
                     </Button>
                     <Link href="/daftar">

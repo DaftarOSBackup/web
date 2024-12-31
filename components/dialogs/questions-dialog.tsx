@@ -87,7 +87,7 @@ export function QuestionsDialog({ open, onOpenChange }: QuestionsDialogProps) {
               />
               <Button
                 onClick={handleCreateList}
-                className="w-full h-8 text-xs bg-blue-600 hover:bg-blue-700"
+                className="w-full h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white"
               >
                 Create List
               </Button>
@@ -128,7 +128,7 @@ export function QuestionsDialog({ open, onOpenChange }: QuestionsDialogProps) {
                       />
                       <Button
                         onClick={handleAddQuestion}
-                        className="bg-blue-600 hover:bg-blue-700 text-xs"
+                        className="bg-blue-600 hover:bg-blue-700 text-xs text-white"
                       >
                         Add
                       </Button>
@@ -179,7 +179,7 @@ export function QuestionsDialog({ open, onOpenChange }: QuestionsDialogProps) {
                     <Button
                       size="sm"
                       onClick={handleAddToPitch}
-                      className="h-8 text-xs bg-blue-600 hover:bg-blue-700"
+                      className="h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white"
                     >
                       Add to Pitch
                     </Button>

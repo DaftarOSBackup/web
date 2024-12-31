@@ -88,7 +88,7 @@ export default function MeetingsPage() {
             <Input placeholder="Search meetings..." className="pl-8 w-[250px]" />
           </div>
           <Button 
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
             onClick={() => setScheduleOpen(true)}
           >
             <span className="text-xs">Schedule Meeting</span>
@@ -246,7 +246,7 @@ export default function MeetingsPage() {
                 <div className="flex items-center gap-2">
                     <Button
                       size="sm"
-                      className="bg-blue-600 hover:bg-blue-700 rounded-[0.3rem]"
+                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
                       onClick={() => handleAccept(selectedMeeting.id)}
                     >
                       Accept

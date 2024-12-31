@@ -164,7 +164,7 @@ export default function ProgramDetailsPage({ params }: { params: { slug: string 
             <span className="text-xs">Insights</span>
           </Button>
           
-          <Button className="bg-blue-600 hover:bg-blue-700" size="sm">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white" size="sm">
             <span className="text-xs">Share</span>
           </Button>
         </div>

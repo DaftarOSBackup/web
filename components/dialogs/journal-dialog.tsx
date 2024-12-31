@@ -56,7 +56,7 @@ export function JournalDialog({ open, onOpenChange }: JournalDialogProps) {
             <Button
               size="sm"
               onClick={handleSave}
-              className="text-sm rounded-[0.3rem] h-8 bg-blue-600 hover:bg-blue-700"
+              className="text-sm rounded-[0.3rem] h-8 bg-blue-600 hover:bg-blue-700 text-white"
             >
               Save Note
             </Button>

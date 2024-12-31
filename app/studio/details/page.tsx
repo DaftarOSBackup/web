@@ -56,7 +56,7 @@ export default function ProgramDetailsPage() {
         <div className="pt-4 flex justify-center">
           <Button 
             onClick={handleSave}
-            className="bg-blue-600 hover:bg-blue-700"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
           >
             Save
           </Button>

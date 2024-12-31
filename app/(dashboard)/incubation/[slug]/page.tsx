@@ -3,7 +3,8 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Bookmark, BookmarkCheck } from "lucide-react"
+import { Bookmark } from "lucide-react"
+import { BookmarkFilled } from "@/components/icons"
 import { SelectDaftarDialog } from "@/components/dialogs/select-daftar-dialog"
 import Link from "next/link"
 import {
@@ -78,7 +79,7 @@ export default function ProgramPage({ params }: { params: { slug: string } }) {
               className="absolute top-4 left-4 h-8 w-8 bg-background/80 backdrop-blur-sm border rounded-[0.3rem] z-10 hover:bg-background"
             >
               {isBookmarked ? (
-                <BookmarkCheck className="h-4 w-4" />
+                <BookmarkFilled className="h-4 w-4" />
               ) : (
                 <Bookmark className="h-4 w-4" />
               )}
@@ -145,7 +146,7 @@ export default function ProgramPage({ params }: { params: { slug: string } }) {
               Share
             </Button>
             <Button
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
               onClick={() => setSelectDaftarOpen(true)}
             >
               <div className="flex items-center">

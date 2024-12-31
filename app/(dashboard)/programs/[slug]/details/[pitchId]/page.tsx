@@ -338,7 +338,7 @@ export default function PitchDetailsPage({ params }: { params: { slug: string; p
                   <span>{new Date(pitchDetails.sections.foundersPitch.pitchedAt).toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button className="bg-blue-600 hover:bg-blue-700" size="sm">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white" size="sm">
                     Withdraw
                   </Button>
                   <Button
@@ -527,7 +527,7 @@ export default function PitchDetailsPage({ params }: { params: { slug: string; p
               <h2 className="text-lg font-semibold">Meetings</h2>
               <Button 
                 size="sm"
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
                 onClick={() => setScheduleMeetingOpen(true)}
               >
                 Schedule Meeting
@@ -656,7 +656,7 @@ export default function PitchDetailsPage({ params }: { params: { slug: string; p
                     </Button>
                     <Button
                       size="sm"
-                      className="bg-blue-600 hover:bg-blue-700"
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
                     >
                       Accept
                     </Button>
@@ -698,7 +698,7 @@ export default function PitchDetailsPage({ params }: { params: { slug: string; p
                     />
                   </div>
                   <div className="flex items-center justify-center">
-                  <Button className="bg-blue-600 hover:bg-blue-700">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                     Share
                   </Button>
                   </div>

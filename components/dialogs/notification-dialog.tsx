@@ -168,7 +168,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                         </Button>
                         <Button
                           size="sm"
-                          className="bg-blue-600 hover:bg-blue-700"
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
                         >
                           Accept
                         </Button>
