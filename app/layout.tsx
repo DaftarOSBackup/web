@@ -6,6 +6,9 @@ import { RoleProvider } from "@/contexts/role-context";
 export const metadata: Metadata = {
   title: "Pitch OS",
   description: "Pitch OS is a platform for startups to pitch their ideas to investors",
+  icons: {
+    icon: "/assets/daftar.png",
+  },
 };
 
 export default function RootLayout({
