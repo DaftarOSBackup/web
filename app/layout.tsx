@@ -4,8 +4,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { RoleProvider } from "@/contexts/role-context";
 
 export const metadata: Metadata = {
-  title: "Investment Platform",
-  description: "Connect investors with promising startups",
+  title: "Pitch OS",
+  description: "Pitch OS is a platform for startups to pitch their ideas to investors",
 };
 
 export default function RootLayout({
