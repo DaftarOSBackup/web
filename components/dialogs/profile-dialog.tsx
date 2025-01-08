@@ -34,12 +34,13 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { useRole } from "@/contexts/role-context"
 
 interface ProfileData {
-  name: string
+  firstName: string
+  lastName: string
   email: string
   phone: string
   gender: string
   language: string
-  bio: string
+  bigPicture: string
   createdAt: string
 }
 
@@ -87,12 +88,13 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
   const [featureMessage, setFeatureMessage] = useState("")
 
   const [profile, setProfile] = useState<ProfileData>({
-    name: "John Doe",
+    firstName: "John",
+    lastName: "Doe",
     email: "john@example.com",
     phone: "+1234567890",
     gender: "male",
     language: "english",
-    bio: "Passionate about technology and innovation.",
+    bigPicture: "Building the future of technology.",
     createdAt: "2024-01-15",
   })
 
@@ -179,18 +181,35 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                   <div className="space-y-6">
                     <div className="grid gap-6 md:grid-cols-2">
                       <div className="space-y-2">
-                        <Label className="text-sm">Name</Label>
+                        <Label className="text-sm">First Name</Label>
                         {isEditing ? (
                           <Input
-                            value={editedProfile.name}
+                            value={editedProfile.firstName}
                             onChange={(e) =>
-                              setEditedProfile({ ...editedProfile, name: e.target.value })
+                              setEditedProfile({ ...editedProfile, firstName: e.target.value })
                             }
                             className="h-9 text-sm rounded-[0.3rem]"
                           />
                         ) : (
                           <div className="px-3 py-2 text-sm bg-muted/50 rounded-[0.3rem]">
-                            {profile.name}
+                            {profile.firstName}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-sm">Last Name</Label>
+                        {isEditing ? (
+                          <Input
+                            value={editedProfile.lastName}
+                            onChange={(e) =>
+                              setEditedProfile({ ...editedProfile, lastName: e.target.value })
+                            }
+                            className="h-9 text-sm rounded-[0.3rem]"
+                          />
+                        ) : (
+                          <div className="px-3 py-2 text-sm bg-muted/50 rounded-[0.3rem]">
+                            {profile.lastName}
                           </div>
                         )}
                       </div>
@@ -246,18 +265,18 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-sm">Bio</Label>
+                      <Label className="text-sm">What's the big picture you're working on?</Label>
                       {isEditing ? (
                         <Textarea
-                          value={editedProfile.bio}
+                          value={editedProfile.bigPicture}
                           onChange={(e) =>
-                            setEditedProfile({ ...editedProfile, bio: e.target.value })
+                            setEditedProfile({ ...editedProfile, bigPicture: e.target.value })
                           }
                           className="min-h-[100px] text-sm resize-none rounded-[0.3rem]"
                         />
                       ) : (
                         <div className="px-3 py-2 text-sm bg-muted/50 rounded-[0.3rem] whitespace-pre-wrap">
-                          {profile.bio}
+                          {profile.bigPicture}
                         </div>
                       )}
                     </div>

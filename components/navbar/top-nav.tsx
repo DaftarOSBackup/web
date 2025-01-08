@@ -66,10 +66,6 @@ export function TopNav() {
               </Button>
             ))}
 
-            <div className="px-1">
-              <ThemeToggle />
-            </div>
-
             <Button 
               variant="ghost" 
               size="icon" 

@@ -13,7 +13,7 @@ export default function LoginPage({ params }: { params: { role: string } }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setRole(role)
-    router.push("/dashboard")
+    router.push("/home")
   }
 
   return (
