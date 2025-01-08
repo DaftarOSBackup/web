@@ -4,20 +4,31 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { useRole } from "@/contexts/role-context"
 import { studioNavItems, founderStudioNavItems } from "@/config/navigation"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, LucideIcon } from "lucide-react"
 import { useState } from "react"
 
 interface StudioSidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+
+interface NavItem {
+  title: string
+  url: string
+  icon: LucideIcon
+  className?: string
+  subItems?: Array<{
+    title: string
+    url: string
+  }>
+}
 
 export function StudioSidebar({ className }: StudioSidebarProps) {
   const pathname = usePathname()
   const { role } = useRole()
   const [expandedItem, setExpandedItem] = useState<string | null>(null)
   
-  const navItems = role === 'investor' ? studioNavItems : founderStudioNavItems
+  const navItems: NavItem[] = role === 'investor' ? studioNavItems : founderStudioNavItems
 
   return (
-    <div className={cn("pb-12", className)}>
+    <div className={cn("pb-12 border-r", className)}>
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <h2 className="mb-2 px-4 text-lg font-semibold">
