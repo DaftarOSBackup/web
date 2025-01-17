@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { RoleProvider } from "@/contexts/role-context";
+import { SearchProvider } from "@/contexts/search-context";
 
 export const metadata: Metadata = {
   title: "Pitch OS",
@@ -19,16 +20,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased font-sans">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <RoleProvider>
-            {children}
-          </RoleProvider>
-        </ThemeProvider>
+        <SearchProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <RoleProvider>
+              {children}
+            </RoleProvider>
+          </ThemeProvider>
+        </SearchProvider>
       </body>
     </html>
   );

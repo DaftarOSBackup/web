@@ -8,17 +8,17 @@ export const investorNavItems = [
   // },
   {
     title: "Programs",
-    url: "/home/programs",
+    url: "/programs",
     icon: Users,
   },
   {
     title: "Meetings",
-    url: "/home/meetings",
+    url: "/meetings",
     icon: Calendar,
   },
   {
     title: "Go Premium",
-    url: "/home/premium",
+    url: "/premium",
     icon: Crown,
   }
 ]
@@ -32,22 +32,22 @@ export const founderNavItems = [
   // },
   {
     title: "Incubation",
-    url: "/home/incubation",
+    url: "/incubation",
     icon: Building,
   },
   {
     title: "My Daftar",
-    url: "/home/daftar",
+    url: "/daftar",
     icon: DollarSign,
   },
   {
     title: "Meetings",
-    url: "/home/meetings",
+    url: "/meetings",
     icon: Calendar,
   },
   {
     title: "Go Premium",
-    url: "/home/premium",
+    url: "/premium",
     icon: Crown,
   }
 ]
@@ -69,57 +69,57 @@ export const topNavConfig = {
 export const studioNavItems = [
   {
     title: "Program Details",
-    url: "/home/studio/details",
+    url: "/programs/studio/details",
     icon: FileSpreadsheet,
   },
   {
     title: "Collaboration",
-    url: "/home/studio/collaboration",
+    url: "/programs/studio/collaboration",
     icon: Users2,
   },
   {
     title: "Program Document",
-    url: "/home/studio/document",
+    url: "/programs/studio/document",
     icon: FileText,
   },
   {
     title: "Audience",
-    url: "/home/studio/audience",
+    url: "/programs/studio/audience",
     icon: Users,
   },
   {
     title: "Founder's Pitch",
-    url: "/home/studio/founder-pitch",
+    url: "/programs/studio/founder-pitch",
     icon: Video,
   },
   {
     title: "Investor's Pitch",
-    url: "/home/studio/investor-pitch",
+    url: "/programs/studio/investor-pitch",
     icon: MessageCircle,
   },
   {
     title: "FAQs",
-    url: "/home/studio/faqs",
+    url: "/programs/studio/faqs",
     icon: HelpCircle,
   },
   {
     title: "Invite from Database",
-    url: "/home/studio/invite",
+    url: "/programs/studio/invite",
     icon: UserPlus,
   },
   {
     title: "Approval",
-    url: "/home/studio/approval",
+    url: "/programs/studio/approval",
     icon: CheckCircle,
   },
   {
     title: "Schedule",
-    url: "/home/studio/schedule",
+    url: "/programs/studio/schedule",
     icon: Calendar,
   },
   {
     title: "Delete",
-    url: "/home/studio/delete",
+    url: "/programs/studio/delete",
     icon: Trash2,
     className: "text-red-500 hover:text-red-600",
   },
@@ -128,51 +128,51 @@ export const studioNavItems = [
 export const founderStudioNavItems = [
   {
     title: "Pitch Name",
-    url: "/home/studio/pitch-name",
+    url: "/programs/studio/pitch-name",
     icon: FileText,
   },
   {
     title: "Investor's Questions",
-    url: "/home/studio/investor-questions",
+    url: "/programs/studio/investor-questions",
     icon: HelpCircle,
   },
   {
     title: "Pitch",
-    url: "/home/studio/pitch",
+    url: "/programs/studio/pitch",
     icon: Video,
   },
   {
     title: "Meetings",
-    url: "/home/studio/meetings",
+    url: "/programs/studio/meetings",
     icon: Calendar,
   },
   {
     title: "Documents",
-    url: "/home/studio/documents",
+    url: "/programs/studio/documents",
     icon: Folder,
     subItems: [
       {
         title: "Private",
-        url: "/home/studio/documents/private",
+        url: "/programs/studio/documents/private",
       },
       {
         title: "Received",
-        url: "/home/studio/documents/received",
+        url: "/programs/studio/documents/received",
       },
       {
         title: "Sent",
-        url: "/home/studio/documents/sent",
+        url: "/programs/studio/documents/sent",
       }
     ]
   },
   {
     title: "Offer",
-    url: "/home/studio/offer",
+    url: "/programs/studio/offer",
     icon: FileSpreadsheet,
   },
   {
     title: "Delete",
-    url: "/home/studio/delete",
+    url: "/programs/studio/delete",
     icon: Trash2,
     className: "text-red-500 hover:text-red-600",
   },

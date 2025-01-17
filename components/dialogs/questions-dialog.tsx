@@ -80,7 +80,7 @@ export function QuestionsDialog({ open, onOpenChange }: QuestionsDialogProps) {
 
             <div className="space-y-2">
               <Input
-                placeholder="Enter list name"
+                placeholder="Enter list name to be created"
                 value={newListName}
                 onChange={(e) => setNewListName(e.target.value)}
                 className="h-8 text-xs"

@@ -1,14 +1,13 @@
 "use client"
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 interface EndScoutingDialogProps {
   open: boolean
@@ -18,11 +17,11 @@ interface EndScoutingDialogProps {
 
 export function EndScoutingDialog({ open, onOpenChange, onConfirm }: EndScoutingDialogProps) {
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>End Scouting?</AlertDialogTitle>
-          <AlertDialogDescription className="space-y-2">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>End Scouting?</DialogTitle>
+          <DialogDescription className="space-y-2">
             <p>Are you sure you want to end the scouting process?</p>
             <div className="mt-4 p-3 bg-muted rounded-[0.3rem] text-sm">
               <p className="font-medium mb-2">Note:</p>
@@ -33,18 +32,18 @@ export function EndScoutingDialog({ open, onOpenChange, onConfirm }: EndScouting
                 <li>All sent invites will be cancelled</li>
               </ul>
             </div>
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction 
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex justify-center pt-6">
+          <Button 
+            size="sm"
             onClick={onConfirm}
-            className="bg-destructive hover:bg-destructive/90"
+            className="bg-destructive hover:bg-destructive/90 text-white"
           >
             End Scouting
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 } 

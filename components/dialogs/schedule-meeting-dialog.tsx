@@ -100,54 +100,14 @@ export function ScheduleMeetingDialog({ open, onOpenChange }: ScheduleMeetingDia
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Select Daftar</Label>
-                  <Select
-                    value={formData.daftar}
-                    onValueChange={(value) => setFormData({ ...formData, daftar: value })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose daftar" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {daftars.map((daftar) => (
-                        <SelectItem key={daftar.id} value={daftar.id}>
-                          {daftar.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Select Pitch</Label>
-                  <Select
-                    value={formData.pitch}
-                    onValueChange={(value) => setFormData({ ...formData, pitch: value })}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Choose pitch" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {pitches.map((pitch) => (
-                        <SelectItem key={pitch.id} value={pitch.id}>
-                          {pitch.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
               <div className="space-y-2">
-                <Label>Invite Users</Label>
+                <Label>Invite Daftar/Users</Label>
                 <Select
                   value={formData.attendees[0]}
                   onValueChange={(value) => setFormData({ ...formData, attendees: [...formData.attendees, value] })}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select users" />
+                    <SelectValue placeholder="Select Daftar/Users" />
                   </SelectTrigger>
                   <SelectContent>
                     {users

@@ -13,7 +13,11 @@ export default function LoginPage({ params }: { params: { role: string } }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setRole(role)
-    router.push("/home")
+    if (role === "investor") {
+      router.push("/programs")
+    } else {
+      router.push("/incubation") 
+    }
   }
 
   return (
