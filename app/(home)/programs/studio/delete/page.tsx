@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { CheckCircle2, XCircle } from "lucide-react"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 // Sample data
 const approvalRequests = [
@@ -34,6 +35,7 @@ export default function DeletePage() {
 
   return (
     <div className="space-y-6 container mx-auto px-4">
+      <ScrollArea className="h-[calc(100vh-11rem)]">
       <h1 className="text-2xl font-semibold text-destructive">Delete Program</h1>
       
       <div className="space-y-6">
@@ -97,6 +99,7 @@ export default function DeletePage() {
           </p>
         </div>
       </div>
+      </ScrollArea>
     </div>
   )
 } 

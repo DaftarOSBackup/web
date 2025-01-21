@@ -44,7 +44,7 @@ export default function FAQsPage() {
 
   return (
     <div className="space-y-6 container mx-auto px-4">
-    <ScrollArea className="gap-8 h-[calc(100vh-7rem)]">
+    <ScrollArea className="gap-8 h-[calc(100vh-11rem)]">
       <div className="max-w-6xl">
         {/* Add FAQ Form */}
         <div className="space-y-4">

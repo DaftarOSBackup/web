@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Search, Filter, Bell } from "lucide-react"
+import { Search, Filter, Bell, MessageSquare, AlertTriangle, RefreshCcw, Link2, BookOpen } from "lucide-react"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
@@ -107,56 +107,61 @@ const stories = [
   },
 ]
 
+const navItems = [
+  { title: "Requests", value: "requests", icon: MessageSquare, count: requests.length },
+  { title: "Alerts", value: "alerts", icon: AlertTriangle, count: alerts.length },
+  { title: "Updates", value: "updates", icon: RefreshCcw, count: updates.length },
+  { title: "Program Links", value: "program-links", icon: Link2, count: programLinks.length },
+  { title: "Stories", value: "stories", icon: BookOpen, count: stories.length }
+]
+
 export function NotificationDialog({ open, onOpenChange }: NotificationDialogProps) {
-  const [activeSection, setActiveSection] = useState("program-invite")
+  const [activeTab, setActiveTab] = useState("requests")
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl p-0 gap-0">
-        <div className="flex h-[28rem]">
-          {/* Side Navigation */}
-          <div className="w-52 border-r p-2 space-y-3 bg-muted/10">
-            <div className="flex items-center gap-2 px-2">
-              <div className="p-1.5 rounded-[0.3rem] bg-accent/50 text-accent-foreground">
-                <Bell className="h-4 w-4" />
-              </div>
-              <h2 className="text-sm font-semibold">Notifications</h2>
-            </div>
-
-            <div className="space-y-1">
-              {sections.map((section) => (
-                <Button
-                  key={section.id}
-                  variant={activeSection === section.id ? "secondary" : "ghost"}
-                  className={cn(
-                    "w-full justify-start rounded-[0.3rem] py-2 text-sm",
-                    activeSection === section.id 
-                      ? "bg-accent" 
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                  onClick={() => setActiveSection(section.id)}
-                >
-                  {section.label}
-                  {section.count > 0 && (
+      <DialogContent className="max-w-4xl h-[600px] p-0 gap-0">
+        {/* Top Navigation */}
+        <div className="border-b">
+          <nav className="flex items-center space-x-1 px-4 h-14">
+            {navItems.map((item) => (
+              <button
+                key={item.value}
+                onClick={() => setActiveTab(item.value)}
+                className={cn(
+                  "relative px-3 py-2 text-sm rounded-md transition-colors",
+                  "hover:bg-accent/50",
+                  activeTab === item.value 
+                    ? "text-foreground" 
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                <span className="flex items-center gap-2">
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.title}</span>
+                  {item.count > 0 && (
                     <Badge 
-                      variant="secondary" 
-                      className="ml-auto"
+                      variant="secondary"
+                      className="ml-1 h-5 px-1.5"
                     >
-                      {section.count}
+                      {item.count}
                     </Badge>
                   )}
-                </Button>
-              ))}
-            </div>
-          </div>
+                </span>
+                {activeTab === item.value && (
+                  <span className="absolute inset-x-0 -bottom-[10px] h-[2px] bg-foreground" />
+                )}
+              </button>
+            ))}
+          </nav>
+        </div>
 
-          {/* Content Area */}
-          <div className="flex-1">
-            {/* Filter only */}
-            <div className="p-4 mr-8  flex justify-end">
+        <ScrollArea className="h-[calc(600px-3.5rem)]">
+          <div className="p-4">
+            {/* Filter */}
+            <div className="flex justify-end mb-4">
               <Select>
                 <SelectTrigger className="w-[120px]">
-                  <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Filter" />
                 </SelectTrigger>
                 <SelectContent align="end">
@@ -167,101 +172,100 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
               </Select>
             </div>
 
-            {/* Notifications List */}
-            <ScrollArea className="h-[calc(100%-6rem)]">
-              <div className="p-4 space-y-4">
-                {activeSection === "requests" && requests.map((request) => (
-                  <div key={request.id} className="space-y-2">
-                    <div className="flex justify-end">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(request.date).toLocaleString()}
-                      </span>
+            {/* Content for each tab */}
+            <div className="space-y-4">
+              {/* Keep existing content rendering logic for each tab */}
+              {activeTab === "requests" && requests.map((request) => (
+                <div key={request.id} className="space-y-2">
+                  <div className="flex justify-end">
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(request.date).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="p-4 border rounded-[0.3rem] space-y-4">
+                    <div className="space-y-1">
+                      <h4 className="font-medium">{request.title}</h4>
+                      <p className="text-sm text-muted-foreground">{request.daftar}</p>
+                      <p className="text-sm text-muted-foreground">Role: {request.role}</p>
+                      {request.program && (
+                        <p className="text-sm text-muted-foreground">Program: {request.program}</p>
+                      )}
                     </div>
-                    <div className="p-4 border rounded-[0.3rem] space-y-4">
-                      <div className="space-y-1">
-                        <h4 className="font-medium">{request.title}</h4>
-                        <p className="text-sm text-muted-foreground">{request.daftar}</p>
-                        <p className="text-sm text-muted-foreground">Role: {request.role}</p>
-                        {request.program && (
-                          <p className="text-sm text-muted-foreground">Program: {request.program}</p>
-                        )}
-                      </div>
-                      <div className="flex justify-end gap-2">
-                        <Button variant="outline" size="sm" className="text-red-500">Decline</Button>
-                        <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">Accept</Button>
-                      </div>
+                    <div className="flex justify-end gap-2">
+                      <Button variant="outline" size="sm" className="text-red-500">Decline</Button>
+                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">Accept</Button>
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
 
-                {activeSection === "alerts" && alerts.map((alert) => (
-                  <div key={alert.id} className="space-y-2">
-                    <div className="flex justify-end">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(alert.date).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="p-4 border rounded-[0.3rem] space-y-2">
-                      <Badge variant="secondary" className="mb-2">{alert.type}</Badge>
-                      <h4 className="font-medium">{alert.title}</h4>
-                      <p className="text-sm text-muted-foreground">{alert.message}</p>
-                    </div>
+              {activeTab === "alerts" && alerts.map((alert) => (
+                <div key={alert.id} className="space-y-2">
+                  <div className="flex justify-end">
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(alert.date).toLocaleString()}
+                    </span>
                   </div>
-                ))}
+                  <div className="p-4 border rounded-[0.3rem] space-y-2">
+                    <Badge variant="secondary" className="mb-2">{alert.type}</Badge>
+                    <h4 className="font-medium">{alert.title}</h4>
+                    <p className="text-sm text-muted-foreground">{alert.message}</p>
+                  </div>
+                </div>
+              ))}
 
-                {activeSection === "updates" && updates.map((update) => (
-                  <div key={update.id} className="space-y-2">
-                    <div className="flex justify-end">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(update.date).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="p-4 border rounded-[0.3rem] space-y-2">
-                      <p className="text-sm text-muted-foreground">{update.daftar}</p>
-                      <h4 className="font-medium">{update.title}</h4>
-                      <p className="text-sm text-muted-foreground">{update.message}</p>
-                    </div>
+              {activeTab === "updates" && updates.map((update) => (
+                <div key={update.id} className="space-y-2">
+                  <div className="flex justify-end">
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(update.date).toLocaleString()}
+                    </span>
                   </div>
-                ))}
+                  <div className="p-4 border rounded-[0.3rem] space-y-2">
+                    <p className="text-sm text-muted-foreground">{update.daftar}</p>
+                    <h4 className="font-medium">{update.title}</h4>
+                    <p className="text-sm text-muted-foreground">{update.message}</p>
+                  </div>
+                </div>
+              ))}
 
-                {activeSection === "program-links" && programLinks.map((link) => (
-                  <div key={link.id} className="space-y-2">
-                    <div className="flex justify-end">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(link.date).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="p-4 border rounded-[0.3rem] space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Badge variant="secondary">{link.type}</Badge>
-                        <Badge variant={link.status === 'Active' ? 'default' : 'secondary'}>
-                          {link.status}
-                        </Badge>
-                      </div>
-                      <h4 className="font-medium">{link.program}</h4>
-                      <p className="text-sm text-muted-foreground">{link.daftar}</p>
-                    </div>
+              {activeTab === "program-links" && programLinks.map((link) => (
+                <div key={link.id} className="space-y-2">
+                  <div className="flex justify-end">
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(link.date).toLocaleString()}
+                    </span>
                   </div>
-                ))}
+                  <div className="p-4 border rounded-[0.3rem] space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="secondary">{link.type}</Badge>
+                      <Badge variant={link.status === 'Active' ? 'default' : 'secondary'}>
+                        {link.status}
+                      </Badge>
+                    </div>
+                    <h4 className="font-medium">{link.program}</h4>
+                    <p className="text-sm text-muted-foreground">{link.daftar}</p>
+                  </div>
+                </div>
+              ))}
 
-                {activeSection === "stories" && stories.map((story) => (
-                  <div key={story.id} className="space-y-2">
-                    <div className="flex justify-end">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(story.date).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="p-4 border rounded-[0.3rem] space-y-2">
-                      <h4 className="font-medium">{story.title}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">{story.daftar} • {story.program}</p>
-                      <p className="text-sm text-muted-foreground">{story.message}</p>
-                    </div>
+              {activeTab === "stories" && stories.map((story) => (
+                <div key={story.id} className="space-y-2">
+                  <div className="flex justify-end">
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(story.date).toLocaleString()}
+                    </span>
                   </div>
-                ))}
-              </div>
-            </ScrollArea>
+                  <div className="p-4 border rounded-[0.3rem] space-y-2">
+                    <h4 className="font-medium">{story.title}</h4>
+                    <p className="text-sm text-muted-foreground mb-2">{story.daftar} • {story.program}</p>
+                    <p className="text-sm text-muted-foreground">{story.message}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   )

@@ -28,12 +28,12 @@ export default function FounderPitchPage() {
 
   return (
     <div className="space-y-6 container mx-auto px-4">
-      <ScrollArea className="h-[calc(100vh-8rem)]">
+      <ScrollArea className="h-[calc(100vh-11rem)]">
         <div className="gap-8 pr-8">
           {/* Video Pitching Section */}
           <div className="grid grid-cols-2 gap-8">
             <div className="space-y-4">
-                <div className="aspect-[9/16] bg-muted rounded-[0.3rem] relative group cursor-pointer">
+                <div className="aspect-video bg-muted rounded-[0.3rem] relative group cursor-pointer">
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="h-12 w-12 rounded-full bg-blue-600 flex items-center justify-center group-hover:bg-blue-700 transition-colors">
                       <Play className="h-6 w-6 text-white ml-1" />

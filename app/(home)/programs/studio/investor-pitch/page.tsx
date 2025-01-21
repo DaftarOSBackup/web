@@ -34,7 +34,7 @@ export default function InvestorPitchPage() {
 
   return (
     <div className="space-y-6 container mx-auto px-4">
-      <ScrollArea className="gap-8 pr-8 h-[calc(100vh-7rem)]">
+      <ScrollArea className="gap-8 pr-8 h-[calc(100vh-11rem)]">
         <div className="max-w-4xl mx-auto space-y-2">
           {/* Video Preview Section */}
           <div className="aspect-video bg-muted rounded-[0.3rem] relative overflow-hidden">
