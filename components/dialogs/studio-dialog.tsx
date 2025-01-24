@@ -10,7 +10,7 @@ import { ChevronDown } from "lucide-react"
 import ProgramDetailsPage  from "@/components/studio/pitch-name"
 import FounderPitchPage from "../studio/founders-pitch"
 import { InvestorQuestionsContent } from "@/components/studio/investor-questions"
-import StudioLayout from "@/app/(home)/programs/studio/layout"
+import StudioLayout from "@/app/(app)/programs/studio/layout"
 
 interface StudioDialogProps {
   open: boolean
