@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-
+let role;
 const handler = NextAuth({
     providers: [
         GoogleProvider({
@@ -20,7 +20,7 @@ const handler = NextAuth({
         async jwt({ token, account, profile }) {
             // Set initial role from URL when signing in
             if (account && profile) {
-                try {
+                try {   
                     const url = new URL(account.state as string);
                     const path = url.pathname;
                     token.role = path.includes('investor') ? 'investor' : 'founder';
