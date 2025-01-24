@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-let role;
+
 const handler = NextAuth({
     providers: [
         GoogleProvider({
@@ -13,9 +13,8 @@ const handler = NextAuth({
             // Add role to the session
             if (session.user) {
                 session.user.role = token.role as "investor" | "founder";
-                role = token.role;
             }
-            return session;  // Return only the session object
+            return session;
         },
         async jwt({ token, account, profile }) {
             // Set initial role from URL when signing in
