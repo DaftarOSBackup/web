@@ -1,68 +1,55 @@
-"use client"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useRole } from "@/contexts/role-context"
-import { useState } from "react"
-import { Loader2 } from "lucide-react"
+"use client";
+import { Button } from "@/components/ui/button";
+import { useRole } from "@/contexts/role-context";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
-export default function LoginPage({ params }: { params: { role: string } }) {
-  const router = useRouter()
-  const { setRole } = useRole()
-  const role = params.role as "investor" | "founder"
-  const [isLoading, setIsLoading] = useState(false)
+export default function LoginPage() {
+  const pathname = usePathname();
+  const { setRole } = useRole();
+  const role = pathname.includes("investor") ? "investor" : "founder";
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
     try {
-      // Simulate login API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      setRole(role)
-      if (role === "investor") {
-        router.push("/programs")
-      } else {
-        router.push("/incubation") 
-      }
+      setRole(role);
+      await signIn("google", {
+        callbackUrl: role === "investor" ? "/programs" : "/incubation",
+        state: `${window.location.origin}${pathname}`,
+      });
     } catch (error) {
-      console.error("Login error:", error)
+      console.error("Login error:", error);
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="w-full max-w-sm space-y-8 p-4">
       <div className="space-y-2 text-center">
-        <h1 className="text-2xl font-bold">Welcome Back</h1>
-        <p className="text-gray-500">Sign in to your {role} account</p>
+        <h1 className="text-2xl font-bold">Welcome to PitchOS</h1>
+        <p className="text-gray-500">Sign in as {role}</p>
       </div>
-      
+
       {!isLoading ? (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              placeholder="m@example.com"
-              required
-              type="email"
-              className="w-full"
+        <div className="space-y-4">
+          <Button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-2"
+            variant="outline"
+          >
+            <Image
+              src="/google.svg"
+              alt="Google"
+              width={20}
+              height={20}
             />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              required
-              type="password"
-              className="w-full"
-            />
-          </div>
-          <Button type="submit" className="w-full">
-            Sign In
+            Continue with Google
           </Button>
-        </form>
+        </div>
       ) : (
         <div className="py-8 text-center space-y-4">
           <div className="flex justify-center">
@@ -71,11 +58,11 @@ export default function LoginPage({ params }: { params: { role: string } }) {
           <div className="space-y-2">
             <p className="text-lg font-medium">Signing you in</p>
             <p className="text-sm text-muted-foreground">
-              Please wait while we verify your credentials and prepare your workspace.
+              Please wait while we connect to Google...
             </p>
           </div>
         </div>
       )}
     </div>
-  )
-} 
+  );
+}

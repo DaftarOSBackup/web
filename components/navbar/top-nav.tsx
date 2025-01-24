@@ -17,7 +17,7 @@ import { SearchAndFilter } from "./search-and-filter"
 
 export function TopNav() {
   const { role } = useRole()
-  const navActions = topNavConfig[role]
+  const navActions = role ? topNavConfig[role] : topNavConfig["investor"]
   const pathname = usePathname()
   const paths = pathname.split('/').filter(Boolean)
   const [profileOpen, setProfileOpen] = useState(false)
@@ -69,7 +69,7 @@ export function TopNav() {
       {showSearch && <SearchAndFilter />}
       
       <div className="flex items-center gap-2">
-        {navActions.map((action) => (
+        {navActions.map((action: { action: string; icon: any }) => (
           <Button 
             key={action.action}
             variant="ghost" 

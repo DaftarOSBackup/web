@@ -50,10 +50,10 @@ export default function FounderPitchPage() {
             <div className="space-y-4">
               <h2 className="text-lg font-medium">Why Video Pitching?</h2>
               <p className="text-sm text-muted-foreground">
-              Pitch OS helps founders connect through video pitches in the language they’re most comfortable with. By understanding the "why" and "what" of a founder’s journey, it becomes easier to decide whether to meet them in person and offer support.
+              Pitch OS helps founders connect through video pitches in the language they're most comfortable with. By understanding the "why" and "what" of a founder's journey, it becomes easier to decide whether to meet them in person and offer support.
               <br/>
               <br/>
-              We’ve reviewed thousands of startups and investors to create a set of simple questions that help your screening team quickly understand the founder’s journey before deciding to meet.
+              We've reviewed thousands of startups and investors to create a set of simple questions that help your screening team quickly understand the founder's journey before deciding to meet.
               <br/>
               <br/>
               As a Daftar OS Elite member, you can fully customize these questions to match your investment or startup support program.

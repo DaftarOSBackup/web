@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { RoleProvider } from "@/contexts/role-context";
 import { SearchProvider } from "@/contexts/search-context";
+import { AuthProvider } from "@/components/providers/auth-provider";
 
 export const metadata: Metadata = {
   title: "Pitch OS",
@@ -19,19 +20,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased font-sans">
-        <SearchProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <RoleProvider>
-              {children}
-            </RoleProvider>
-          </ThemeProvider>
-        </SearchProvider>
+      <body className="antialiased font-poppins">
+        <AuthProvider>
+          <SearchProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <RoleProvider>
+                {children}
+              </RoleProvider>
+            </ThemeProvider>
+          </SearchProvider>
+        </AuthProvider>
       </body>
     </html>
   );
