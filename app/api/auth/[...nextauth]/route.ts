@@ -12,15 +12,15 @@ const handler = NextAuth({
         async session({ session, token }) {
             // Add role to the session
             if (session.user) {
-                session.user.role = token.role;
+                session.user.role = token.role as "investor" | "founder";
                 role = token.role;
             }
-            return session;
+            return session;  // Return only the session object
         },
         async jwt({ token, account, profile }) {
             // Set initial role from URL when signing in
             if (account && profile) {
-                try {   
+                try {
                     const url = new URL(account.state as string);
                     const path = url.pathname;
                     token.role = path.includes('investor') ? 'investor' : 'founder';
