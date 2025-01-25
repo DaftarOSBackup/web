@@ -6,11 +6,13 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
-      role?: "investor" | "founder";
+      role?: "investor" | "founder" | null;
     };
+    accessToken?: string;
   }
 
   interface JWT {
-    role?: "investor" | "founder";
+    role?: "investor" | "founder" | null;
+    accessToken?: string;
   }
 } 
