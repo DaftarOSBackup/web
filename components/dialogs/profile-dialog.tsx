@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
+import { signOut } from "next-auth/react"
 
 interface ProfileData {
   firstName: string
@@ -90,7 +91,7 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
               <div className="grid grid-cols-3 gap-8">
                 {/* Profile Photo Card */}
                 <div className="space-y-4">
-                  <div className="p-6 border rounded-lg space-y-4">
+                  <div className="p-6  rounded-lg space-y-4">
                     <div className="flex justify-center">
                       <Avatar className="h-32 w-32">
                         <AvatarImage src="https://github.com/shadcn.png" />
@@ -111,8 +112,8 @@ export function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
                         className="w-full text-red-500 hover:text-red-600"
                         size="sm"
                         onClick={() => {
-                          console.log("Signing out...")
                           onOpenChange(false)
+                          signOut()
                         }}
                       >
                         <LogOut className="h-4 w-4 mr-2" />

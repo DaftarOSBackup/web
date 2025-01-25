@@ -4,6 +4,13 @@ import GoogleProvider from "next-auth/providers/google";
 const handler = NextAuth({
     providers: [
         GoogleProvider({
+            authorization: {
+                params: {
+                    prompt: "consent",
+                    access_type: "offline",
+                    response_type: "code",
+                },
+            },
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
@@ -18,6 +25,7 @@ const handler = NextAuth({
         },
         async jwt({ token, account, profile }) {
             // Set initial role from URL when signing in
+            console.log(account);
             if (account && profile) {
                 try {
                     const url = new URL(account.state as string);
