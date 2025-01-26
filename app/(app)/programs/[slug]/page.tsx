@@ -205,8 +205,8 @@ export default function ProgramDetailsPage({ params }: { params: { slug: string 
                       <>
                         <span className="text-xs text-red-600 font-medium">Deleted</span>
                         <span className="text-xs text-muted-foreground">
-                          {new Date(pitch.deletedAt!).toLocaleDateString('en-US', { 
-                            month: 'short', 
+                          {new Date(pitch.deletedAt!).toLocaleDateString('en-US', {
+                            month: 'short',
                             day: 'numeric',
                             year: 'numeric'
                           })}
