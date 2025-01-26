@@ -13,6 +13,7 @@ import {
     QuestionListData,
     QuestionData,
     FAQData,
+    FounderDaftarData,
 } from "./api-types";
 
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -23,6 +24,9 @@ interface ApiClientOptions {
     params?: Record<string, string>;
 }
 
+const baseUrl = "https://873e-103-161-99-215.ngrok-free.app";
+
+
 export async function apiClient(endpoint: string, options: ApiClientOptions = {}) {
     const session = await getSession();
     const token = session?.accessToken;
@@ -30,7 +34,8 @@ export async function apiClient(endpoint: string, options: ApiClientOptions = {}
     const { method = 'GET', body, params } = options;
 
     // Get the session token
-    const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`);
+    const url = new URL(`${baseUrl}${endpoint}`);
+    console.log(url);
 
     // Add query parameters if they exist
     if (params) {
@@ -163,7 +168,10 @@ export const api = {
         getAll: () =>
             apiClient('/investor-daftar/investor-daftar/'),
     },
-
+    founderDaftar: {
+        create: (data: FounderDaftarData) =>
+            apiClient('/founder-daftar/daftar-data/', { method: 'POST', body: data }),
+    },
     // Founder Profile
     founderProfile: {
         delete: () =>

@@ -11,6 +11,12 @@ export interface ProgramData {
   last_day_to_apply: string;
   program_launch_date: string;
 }
+export interface FounderDaftarData {
+  daftar_name: string; // Retained
+  country: string;     // Retained
+  status: string;      // Added status field
+  city: string;        // Retained
+}
 
 export interface InvestorDaftarData {
   daftar_name: string;

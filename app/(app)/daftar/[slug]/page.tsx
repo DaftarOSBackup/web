@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ChartBar, Send, Video, ArrowUpRight, Globe2, Search, Filter } from "lucide-react"
 import Link from "next/link"
-
+import { useToast } from "@/hooks/use-toast"
+import { api } from "@/lib/api-client"
 import {
     Select,
     SelectContent,
@@ -75,31 +76,38 @@ export default function DaftarDetailsPage({ params }: { params: { slug: string }
     const [activeTab, setActiveTab] = useState('pitches')
     const [selectedLanguage, setSelectedLanguage] = useState("english")
     const [teamDialogOpen, setTeamDialogOpen] = useState(false)
-
+    const [isWithdrawing, setIsWithdrawing] = useState(false)
+    const { deleteOrWithdraw } = api.founderPitch
+    const { toast } = useToast()
+    const withdrawPitch = async () => {
+        setIsWithdrawing(true)
+        try {
+            const response = await deleteOrWithdraw({ pitch_id: params.slug, action: 'withdraw' })
+            console.log(response);
+            toast({
+                title: "Pitch withdrawn successfully!",
+                description: "Your pitch has been withdrawn.",
+                variant: "success",
+            })
+        } catch (error) {
+            console.error("Error withdrawing pitch:", error)
+            toast({
+                title: "Error withdrawing pitch",
+                description: (error as Error).message,
+                variant: "error"
+            })
+        } finally {
+            setIsWithdrawing(false)
+        }
+    }
     return (
         <div className="h-[calc(100vh-10rem)] container mx-auto px-4">
             {/* Header with Search and Actions */}
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-start">
                 <div className="flex items-center gap-2">
-                    <div className="relative">
-                        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                        <Input placeholder="Search daftars..." className="pl-8 w-[200px] h-9 text-sm" />
-                    </div>
-
                     <Button size="sm" className="h-9 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => setTeamDialogOpen(true)}>
-                        team
+                        Team
                     </Button>
-                    <Select>
-                        <SelectTrigger className="h-9 text-sm">
-                            <Filter className="h-4 w-4" />
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">All Daftars</SelectItem>
-                            <SelectItem value="active">Active</SelectItem>
-                            <SelectItem value="archived">Archived</SelectItem>
-                        </SelectContent>
-                    </Select>
 
                 </div>
             </div>
@@ -211,7 +219,7 @@ export default function DaftarDetailsPage({ params }: { params: { slug: string }
                             <span className="text-xs text-muted-foreground"> {pitchDetails.submittedDate}</span>
                         </div>
 
-                        <Button size="sm" className=" bg-blue-600 hover:bg-blue-700">
+                        <Button onClick={withdrawPitch} disabled={isWithdrawing} size="sm" className=" bg-blue-600 hover:bg-blue-700">
                             Withdraw Pitch
                         </Button>
                     </div>

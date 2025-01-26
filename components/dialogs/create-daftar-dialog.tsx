@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useToast } from "@/hooks/use-toast"
 import { Loader2 } from "lucide-react"
 import {
   Select,
@@ -12,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { FounderDaftarData } from "@/lib/api-types"
+import { apiClient, api } from "@/lib/api-client"
 
 interface CreateDaftarDialogProps {
   open: boolean
@@ -57,19 +60,32 @@ export function CreateDaftarDialog({ open, onOpenChange }: CreateDaftarDialogPro
     structure: "",
     country: ""
   })
+  const { founderDaftar } = api;
   const [isCreating, setIsCreating] = useState(false)
 
+  const { toast } = useToast(); // Initialize toaster
+
   const handleSubmit = async () => {
-    setIsCreating(true)
+    setIsCreating(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      console.log("Creating daftar:", formData)
-      onOpenChange(false)
+      const response = await founderDaftar.create({
+        daftar_name: formData.name,
+        country: formData.country,
+        status: "active",
+        city: "",
+      });
+      console.log("Daftar created successfully:", response);
+      toast({
+        title: "Daftar created successfully!",
+        description: "Your daftar has been created successfully!",
+        variant: "success",
+      });
+      onOpenChange(false);
     } catch (error) {
-      console.error("Error creating daftar:", error)
+      console.error("Error creating daftar:", error);
+      toast({ title: "Error creating daftar ", description: (error as Error).message, variant: "error" }); // Use toaster for error message
     } finally {
-      setIsCreating(false)
+      setIsCreating(false);
     }
   }
 
@@ -147,7 +163,7 @@ export function CreateDaftarDialog({ open, onOpenChange }: CreateDaftarDialogPro
             <div className="space-y-2">
               <p className="text-lg font-medium">Creating your Daftar</p>
               <p className="text-sm text-muted-foreground">
-                Please wait while we set up your Daftar environment. 
+                Please wait while we set up your Daftar environment.
                 This may take a few moments.
               </p>
             </div>

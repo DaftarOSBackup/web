@@ -32,8 +32,8 @@ const handler = NextAuth({
         async jwt({ token, account, profile }) {
             if (account && profile) {
                 try {
-                    const role = "founder"; // Static role assignment
-                    const endpoint = role !== 'founder'
+                    const role = "investor"; // Static role assignment
+                    const endpoint = role == 'investor'
                         ? `${process.env.BASE_URL}/investor-login/investor-sign-in/`
                         : `${process.env.BASE_URL}/founder-login/google-sign-in/`;
 

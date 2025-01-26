@@ -4,8 +4,10 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Mail, Phone, Languages } from "lucide-react"
+import { Mail, Phone, Languages, Loader2 } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { api } from "@/lib/api-client"
+import { useToast } from "@/hooks/use-toast"
 
 interface TeamDialogProps {
   open: boolean
@@ -45,11 +47,47 @@ export function TeamDialog({ open, onOpenChange }: TeamDialogProps) {
     designation: "",
     email: ""
   })
+  const { inviteTeamMember } = api.founderTeam;
+  const [isInviting, setIsInviting] = useState(false)
+  const { toast } = useToast()
 
-  const handleSendInvite = () => {
-    console.log("Sending invite:", formData)
-    // Add your invite logic here
+  const handleSendInvite = async () => {
+    setIsInviting(true)
+    try {
+      const response = await inviteTeamMember({
+        pitch_id: 1,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        designation: formData.designation,
+        email: formData.email
+      })
+
+      toast({
+        title: "Team member invited successfully!",
+        description: `Invitation sent to ${formData.email}`,
+        variant: "success",
+      })
+
+      // Optionally close dialog or reset form
+      onOpenChange(false)
+      // resetForm() if you have a form reset function
+
+    } catch (error) {
+      console.error("Error inviting team member:", error)
+      toast({
+        title: "Error inviting team member",
+        description: (error as Error).message,
+        variant: "error"
+      })
+    } finally {
+      setIsInviting(false)
+    }
   }
+
+  const isFormValid = formData.firstName &&
+    formData.lastName &&
+    formData.designation &&
+    formData.email
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -77,7 +115,7 @@ export function TeamDialog({ open, onOpenChange }: TeamDialogProps) {
               {/* Team Members List */}
               <div className="space-y-4">
                 {teamMembers.map((member) => (
-                  <div 
+                  <div
                     key={member.id}
                     className="p-4 rounded-[0.3rem] border space-y-4"
                   >
@@ -113,7 +151,7 @@ export function TeamDialog({ open, onOpenChange }: TeamDialogProps) {
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {member.preferredLanguages.map((lang) => (
-                            <span 
+                            <span
                               key={lang}
                               className="text-xs px-2 py-1 bg-muted rounded-[0.3rem]"
                             >
@@ -154,11 +192,19 @@ export function TeamDialog({ open, onOpenChange }: TeamDialogProps) {
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                   />
-                  <Button 
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  <Button
                     onClick={handleSendInvite}
+                    disabled={isInviting || !isFormValid}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                   >
-                    Send Invite
+                    {isInviting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending Invite...
+                      </>
+                    ) : (
+                      'Send Invite'
+                    )}
                   </Button>
                 </div>
               </div>
@@ -168,7 +214,7 @@ export function TeamDialog({ open, onOpenChange }: TeamDialogProps) {
           <TabsContent value="pending" className="mt-0 h-[calc(100%-4rem)] overflow-auto">
             <div className="space-y-4">
               {pendingInvites.map((invite) => (
-                <div 
+                <div
                   key={invite.id}
                   className="p-4 rounded-[0.3rem] border flex items-center justify-between"
                 >

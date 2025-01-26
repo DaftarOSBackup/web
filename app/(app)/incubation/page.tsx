@@ -8,7 +8,8 @@ import Image from "next/image"
 import torrickeBarton from "@/public/assets/torricke-barton.jpg"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useSearch } from "@/contexts/search-context"
-
+import { ProgramData } from "@/lib/api-types"
+import { apiClient } from "@/lib/api-client"
 // Sample data
 const programs = [
   {
