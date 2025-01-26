@@ -54,6 +54,14 @@ const meetings: Meeting[] = [
   },
 ]
 
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
 export default function MeetingsPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null)
@@ -114,7 +122,7 @@ export default function MeetingsPage() {
                   <div>
                     <h4 className="font-medium text-sm">{meeting.title}</h4>
                     <p className="text-xs text-muted-foreground">
-                      {meeting.date} at {meeting.time}
+                      {formatDate(meeting.date)} at {meeting.time}
                     </p>
                   </div>
                 </div>
@@ -129,7 +137,7 @@ export default function MeetingsPage() {
             <div>
               <h3 className="font-medium">Today's Schedule</h3>
               <p className="text-sm text-muted-foreground">
-                {format(new Date(), "EEEE, MMMM d")}
+                {format(new Date(), "MMM d, yyyy")}
               </p>
             </div>
             <div className="text-xl font-medium">
@@ -184,7 +192,7 @@ export default function MeetingsPage() {
               <div className="space-y-4">
                 <div className="flex items-center gap-2 text-sm">
                   <Clock className="h-4 w-4 text-muted-foreground" />
-                  <span>{selectedMeeting.date} at {selectedMeeting.time}</span>
+                  <span>{formatDate(selectedMeeting.date)} at {selectedMeeting.time}</span>
                 </div>
 
                 {selectedMeeting.location === "virtual" ? (

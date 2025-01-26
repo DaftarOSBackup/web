@@ -13,12 +13,46 @@ import {
 } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { CreateDaftarDialog } from "@/components/dialogs/create-daftar-dialog"
+import { cn } from "@/lib/utils"
+import { useSearch } from "@/contexts/search-context"
+
+// Add these interfaces at the top
+interface TeamMember {
+  name: string;
+  role: string;
+  email: string;
+}
+
+interface DaftarSubscription {
+  plan: string;
+  status: string;
+  nextBilling: string;
+  features: string[];
+}
 
 // Sample data
 const daftars = [
   {
     id: "tech-innovation",
     name: "Tech Innovation Fund",
+    team: {
+      owner: "John Doe",
+      members: [
+        { name: "Sarah Smith", role: "Member", email: "sarah@example.com" },
+        { name: "Mike Johnson", role: "Member", email: "mike@example.com" }
+      ]
+    },
+    subscription: {
+      plan: "Pro",
+      status: "Active",
+      nextBilling: "2024-04-15",
+      features: [
+        "Unlimited pitches",
+        "Advanced analytics",
+        "Priority support",
+        "Custom branding"
+      ]
+    },
     pitches: [
       {
         name: "AI Healthcare Solution",
@@ -35,6 +69,23 @@ const daftars = [
   {
     id: "sustainable-growth",
     name: "Sustainable Growth",
+    team: {
+      owner: "Jane Doe",
+      members: [
+        { name: "Alice Smith", role: "Member", email: "alice@example.com" },
+        { name: "Bob Johnson", role: "Member", email: "bob@example.com" }
+      ]
+    },
+    subscription: {
+      plan: "Basic",
+      status: "Inactive",
+      nextBilling: "2024-05-15",
+      features: [
+        "Limited pitches",
+        "Basic analytics",
+        "Standard support"
+      ]
+    },
     pitches: [
       {
         name: "Green Energy Project",
@@ -69,49 +120,53 @@ const overview = {
   ]
 }
 
+// Add date formatter
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
 export default function DaftarPage() {
+  const { searchQuery, filterValue } = useSearch()
   const [selectedDaftar, setSelectedDaftar] = useState<typeof daftars[0] | null>(null)
   const [createDaftarOpen, setCreateDaftarOpen] = useState(false)
 
+  // Filter daftars based on search query and filter value
+  const filteredDaftars = daftars.filter(daftar => {
+    const matchesSearch = daftar.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      daftar.team.owner.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesFilter = filterValue === 'all' ||
+      (filterValue === 'active' && daftar.subscription.status === 'Active') ||
+      (filterValue === 'archived' && daftar.subscription.status === 'Inactive')
+    return matchesSearch && matchesFilter
+  })
+
   return (
     <div className="space-y-6 container mx-auto px-4">
-      {/* Header with Search and Actions */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">My Daftar</h2>
-        <div className="flex items-center gap-2">
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search daftars..." className="pl-8 w-[200px] h-9 text-sm" />
-          </div>
 
-          <Button size="sm" className="h-9 bg-blue-600 hover:bg-blue-700 text-white"
-          onClick={() => setCreateDaftarOpen(true)}>
-            New Daftar
-          </Button>
-          <Link href="/pitch-board">
-          <Button size="sm" variant="outline" className="h-9">
-            Pitch Board
-          </Button>
-          </Link>
-          <Select>
-            <SelectTrigger className="h-9 text-sm">
-              <Filter className="h-4 w-4" />
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Daftars</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="archived">Archived</SelectItem>
-            </SelectContent>
-          </Select>
-          
-        </div>
-      </div>
+      <div className="flex gap-6">
 
-      <div className="grid grid-cols-[2fr_1fr] gap-6">
         {/* Daftars and Pitches Section */}
-        <div className="space-y-4">
-          {daftars.map((daftar) => (
+        <div className="space-y-6 w-[70%]">
+          {/* Header with Search and Actions */}
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">My Daftar</h2>
+            <div className="flex items-center gap-2">
+              <Button size="sm" className="h-9 bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={() => setCreateDaftarOpen(true)}>
+                New Daftar
+              </Button>
+              <Link href="/pitch-board">
+                <Button size="sm" variant="outline" className="h-9">
+                  Pitch Board
+                </Button>
+              </Link>
+            </div>
+          </div>
+          {filteredDaftars.map((daftar) => (
             <div
               key={daftar.name}
               className="border rounded-[0.3rem] divide-y cursor-pointer hover:border-blue-600"
@@ -121,10 +176,9 @@ export default function DaftarPage() {
                 <div className="flex items-center justify-between">
                   <h3 className="font-medium">{daftar.name}</h3>
                   <Link href={`/daftar/${daftar.id}`}>
-                  <Button variant="ghost" size="sm" className="text-xs">
-                    View Details
-                    <ArrowUpRight className="h-4 w-4 ml-1" />
-                  </Button>
+                    <Button variant="secondary" size="sm" className="text-xs">
+                      View Details
+                    </Button>
                   </Link>
                 </div>
               </div>
@@ -138,21 +192,17 @@ export default function DaftarPage() {
                       <div className="space-y-1">
                         <p className="text-sm font-medium">{pitch.name}</p>
                         <p className="text-xs text-muted-foreground">
-                          Pitched on {new Date(pitch.date).toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' })}
+                          Pitched on {formatDate(pitch.date)}
                         </p>
                       </div>
-                      <Badge
-                        variant="secondary"
-                        className={
-                          pitch.status === "Accepted" 
-                            ? "bg-green-100 text-green-700" 
-                            : pitch.status === "Rejected"
-                            ? "bg-red-100 text-red-700"
-                            : ""
-                        }
-                      >
+                      <span className={cn(
+                        "text-xs",
+                        pitch.status === "Accepted" && "text-green-600",
+                        pitch.status === "Rejected" && "text-red-600",
+                        pitch.status === "Pending" && "text-muted-foreground"
+                      )}>
                         {pitch.status}
-                      </Badge>
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -162,54 +212,70 @@ export default function DaftarPage() {
         </div>
 
         {/* Daftar Details Section */}
-        <div className="space-y-6">
+        <div className="space-y-6 w-[30%]">
           {selectedDaftar ? (
             <>
-              <div className="p-4 border rounded-[0.3rem]">
-                <h3 className="font-medium mb-4">{selectedDaftar.name}</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 rounded-[0.3rem] bg-muted/50">
-                    <p className="text-sm text-muted-foreground">Total Pitches</p>
-                    <p className="text-xl font-bold">{selectedDaftar.pitches.length}</p>
+              {/* Team Section */}
+              <div className="border rounded-[0.3rem]">
+                <div className="p-4 border-b">
+                  <h3 className="font-medium">Team</h3>
+                </div>
+                <div className="p-4 space-y-4">
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">Owner</p>
+                    <p className="text-sm font-medium">{selectedDaftar.team.owner}</p>
                   </div>
-                  <div className="p-3 rounded-[0.3rem] bg-muted/50">
-                    <p className="text-sm text-muted-foreground">Accepted</p>
-                    <p className="text-xl font-bold">
-                      {selectedDaftar.pitches.filter(p => p.status === "Accepted").length}
-                    </p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">Members</p>
+                    <div className="space-y-3">
+                      {selectedDaftar.team.members.map((member) => (
+                        <div key={member.email} className="flex items-center justify-between">
+                          <div>
+                            <p className="text-sm font-medium">{member.name}</p>
+                            <p className="text-xs text-muted-foreground">{member.email}</p>
+                          </div>
+                          <span className="text-xs text-muted-foreground">
+                            {member.role}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
 
+              {/* Subscription Section */}
               <div className="border rounded-[0.3rem]">
                 <div className="p-4 border-b">
-                  <h3 className="font-medium">Recent Pitches</h3>
+                  <h3 className="font-medium">Subscription</h3>
                 </div>
-                <div className="divide-y">
-                  {selectedDaftar.pitches.map((pitch) => (
-                    <div key={pitch.name} className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-1">
-                          <p className="text-sm font-medium">{pitch.name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {new Date(pitch.date).toLocaleDateString()}
-                          </p>
-                        </div>
-                        <Badge
-                          variant="secondary"
-                          className={
-                            pitch.status === "Accepted" 
-                              ? "bg-green-100 text-green-700" 
-                              : pitch.status === "Rejected"
-                              ? "bg-red-100 text-red-700"
-                              : ""
-                          }
-                        >
-                          {pitch.status}
-                        </Badge>
-                      </div>
+                <div className="p-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium">{selectedDaftar.subscription.plan} Plan</p>
+                      <p className="text-xs text-muted-foreground">
+                        Next billing: {formatDate(selectedDaftar.subscription.nextBilling)}
+                      </p>
                     </div>
-                  ))}
+                    <span className={cn(
+                      "text-xs",
+                      selectedDaftar.subscription.status === "Active" && "text-green-600",
+                      selectedDaftar.subscription.status === "Inactive" && "text-red-600"
+                    )}>
+                      {selectedDaftar.subscription.status}
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">Features</p>
+                    <ul className="space-y-2">
+                      {selectedDaftar.subscription.features.map((feature, index) => (
+                        <li key={index} className="text-sm flex items-center gap-2">
+                          <div className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </>
@@ -220,7 +286,7 @@ export default function DaftarPage() {
           )}
         </div>
       </div>
-      <CreateDaftarDialog 
+      <CreateDaftarDialog
         open={createDaftarOpen}
         onOpenChange={setCreateDaftarOpen}
       />

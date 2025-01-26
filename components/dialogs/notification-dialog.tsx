@@ -115,6 +115,15 @@ const navItems = [
   { title: "Stories", value: "stories", icon: BookOpen, count: stories.length }
 ]
 
+// Add this helper function at the top of the file
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
 export function NotificationDialog({ open, onOpenChange }: NotificationDialogProps) {
   const [activeTab, setActiveTab] = useState("requests")
 
@@ -179,7 +188,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                 <div key={request.id} className="space-y-2">
                   <div className="flex justify-end">
                     <span className="text-xs text-muted-foreground">
-                      {new Date(request.date).toLocaleString()}
+                      {formatDate(request.date)}
                     </span>
                   </div>
                   <div className="p-4 border rounded-[0.3rem] space-y-4">
@@ -203,7 +212,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                 <div key={alert.id} className="space-y-2">
                   <div className="flex justify-end">
                     <span className="text-xs text-muted-foreground">
-                      {new Date(alert.date).toLocaleString()}
+                      {formatDate(alert.date)}
                     </span>
                   </div>
                   <div className="p-4 border rounded-[0.3rem] space-y-2">
@@ -218,7 +227,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                 <div key={update.id} className="space-y-2">
                   <div className="flex justify-end">
                     <span className="text-xs text-muted-foreground">
-                      {new Date(update.date).toLocaleString()}
+                      {formatDate(update.date)}
                     </span>
                   </div>
                   <div className="p-4 border rounded-[0.3rem] space-y-2">
@@ -233,7 +242,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                 <div key={link.id} className="space-y-2">
                   <div className="flex justify-end">
                     <span className="text-xs text-muted-foreground">
-                      {new Date(link.date).toLocaleString()}
+                      {formatDate(link.date)}
                     </span>
                   </div>
                   <div className="p-4 border rounded-[0.3rem] space-y-2">
@@ -253,7 +262,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                 <div key={story.id} className="space-y-2">
                   <div className="flex justify-end">
                     <span className="text-xs text-muted-foreground">
-                      {new Date(story.date).toLocaleString()}
+                      {formatDate(story.date)}
                     </span>
                   </div>
                   <div className="p-4 border rounded-[0.3rem] space-y-2">

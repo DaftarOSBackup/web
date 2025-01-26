@@ -28,7 +28,9 @@ export function TopNav() {
   // Only show search on specific pages
   const showSearch = pathname.includes('/programs') || 
                     pathname.includes('/meetings') || 
-                    pathname.includes('/incubation')
+                    pathname.includes('/incubation') ||
+                    pathname.includes('/daftar') ||
+                    pathname.includes('/pitch-board')
 
   const handleActionClick = (action: string) => {
     switch (action) {

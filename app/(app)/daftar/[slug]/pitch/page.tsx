@@ -62,7 +62,11 @@ export default function NewPitchPage({ params }: { params: { daftarId: string } 
                 <div className="space-y-4">
                     <div className="">
                         <p className="text-sm text-muted-foreground">Status: <span className="font-semibold">{pitchDetails.status}</span></p>
-                        <span className="text-xs text-muted-foreground"> {new Date(pitchDetails.submittedDate).toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                        <span className="text-xs text-muted-foreground"> {new Date(pitchDetails.submittedDate).toLocaleDateString('en-US', { 
+                          month: 'short', 
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}</span>
                     </div>
 
                     <Button size="sm" className=" bg-blue-600 hover:bg-blue-700 text-white">
@@ -85,7 +89,11 @@ export default function NewPitchPage({ params }: { params: { daftarId: string } 
                             In collaboration with {pitchDetails.program.collaboration}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                            Last day to pitch: {new Date(pitchDetails.program.lastPitchDate).toLocaleDateString()}
+                            Last day to pitch: {new Date(pitchDetails.program.lastPitchDate).toLocaleDateString('en-US', { 
+                              month: 'short', 
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
                         </p>
                         <Link href={`/incubation/${pitchDetails.program.name}`}>
                             <Button variant="link" className="text-xs p-0 h-auto text-blue-600 hover:text-blue-700 mt-2"

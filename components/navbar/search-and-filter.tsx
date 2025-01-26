@@ -30,12 +30,27 @@ const filterOptions = {
     { value: 'active', label: 'Active' },
     { value: 'upcoming', label: 'Upcoming' },
   ],
+  daftar: [
+    { value: 'all', label: 'All Daftar' },
+    { value: 'active', label: 'Active' },
+    { value: 'archived', label: 'Archived' },
+  ],
+  'pitch-board': [
+    { value: 'all', label: 'All Pitches' },
+    { value: 'planning', label: 'Planning' },
+    { value: 'pitched', label: 'Pitched' },
+    { value: 'offer', label: 'Offer Received' },
+    { value: 'accepted', label: 'Accepted' },
+    { value: 'cancelled', label: 'Deal Cancelled' },
+  ],
 }
 
 const searchPlaceholders = {
   programs: 'Search programs...',
   meetings: 'Search meetings...',
   incubation: 'Search incubation programs...',
+  daftar: 'Search daftar...',
+  'pitch-board': 'Search pitches...',
 }
 
 export function SearchAndFilter() {

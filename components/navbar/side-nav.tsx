@@ -42,23 +42,23 @@ export function AppSidebar() {
 
   return (
     <>
-      <div
-        className={cn(
-          "border-r bg-background relative transition-all duration-300 ease-in-out",
-          isCollapsed ? "w-[60px]" : "w-[240px]"
-        )}
-      >
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute -right-4 top-6 z-10 rounded-full border shadow-md"
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
-          <ChevronLeft className={cn(
-            "h-4 w-4 transition-transform",
-            isCollapsed && "rotate-180"
-          )} />
-        </Button>
+      <div className={cn(
+        "border-r bg-background relative transition-all duration-300 ease-in-out",
+        isCollapsed ? "w-[60px]" : "w-[240px]"
+      )}>
+        <div className="absolute -right-3 top-6">
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-6 w-6 rounded-full border shadow-sm bg-background"
+            onClick={() => setIsCollapsed(!isCollapsed)}
+          >
+            <ChevronLeft className={cn(
+              "h-3 w-3 transition-transform duration-200",
+              isCollapsed && "rotate-180"
+            )} />
+          </Button>
+        </div>
 
         <div className="flex h-full flex-col">
           {/* Header */}
