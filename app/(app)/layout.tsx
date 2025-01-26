@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/navbar/side-nav";
 import { TopNav } from "@/components/navbar/top-nav";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function HomeLayout({
   children,
@@ -12,6 +13,7 @@ export default function HomeLayout({
       <div className="flex-1 w-full">
         <TopNav />
         <main className="p-4">{children}</main>
+        <Toaster />
       </div>
     </div>
   )
