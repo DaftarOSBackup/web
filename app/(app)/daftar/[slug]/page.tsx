@@ -20,6 +20,14 @@ const tabs = [
     { id: 'analysis', icon: ChartBar, label: 'Analysis' },
     { id: 'pitches', icon: Send, label: 'Pitches' },
 ]
+const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+    });
+};
+
 
 // Sample data - replace with real data
 const pitchDetails = {
@@ -30,12 +38,12 @@ const pitchDetails = {
     stage: "Seed",
     demoLink: "https://demo.example.com",
     status: "Under Review",
-    submittedDate: "2024-03-15",
+    submittedDate: formatDate("2024-03-15"),
     investorVideo: "https://example.com/investor-video.mp4",
     program: {
         name: "Tech Innovation Fund",
         collaboration: "Daftar OS",
-        lastPitchDate: "2024-04-15",
+        lastPitchDate: formatDate("2024-04-15"),
         description: "Early stage technology companies investment program focused on innovative solutions..."
     },
     questions: [
@@ -96,144 +104,144 @@ export default function DaftarDetailsPage({ params }: { params: { slug: string }
                 </div>
             </div>
             <div className="flex gap-6 mt-6">
-            {/* Left Sidebar - Tabs */}
-            <div className="w-[10%] border-r">
-                <div className="p-2">
-                    {tabs.map((tab) => (
-                        <Button
-                            key={tab.id}
-                            variant={activeTab === tab.id ? "secondary" : "ghost"}
-                            className={cn(
-                                "w-full justify-start gap-2",
-                                activeTab === tab.id ? "bg-accent" : ""
-                            )}
-                            onClick={() => setActiveTab(tab.id)}
-                        >
-                            <tab.icon className="h-4 w-4" />
-                            <span className="text-xs">{tab.label}</span>
-                        </Button>
-                    ))}
-                </div>
-            </div>
-
-            {/* Main Content */}
-            <ScrollArea className="w-[65%] pr-6">
-                <div className="space-y-6">
-                    <div>
-                        <h2 className="text-xl font-semibold">{pitchDetails.name}</h2>
+                {/* Left Sidebar - Tabs */}
+                <div className="w-[10%] border-r">
+                    <div className="p-2">
+                        {tabs.map((tab) => (
+                            <Button
+                                key={tab.id}
+                                variant={activeTab === tab.id ? "secondary" : "ghost"}
+                                className={cn(
+                                    "w-full justify-start gap-2",
+                                    activeTab === tab.id ? "bg-accent" : ""
+                                )}
+                                onClick={() => setActiveTab(tab.id)}
+                            >
+                                <tab.icon className="h-4 w-4" />
+                                <span className="text-xs">{tab.label}</span>
+                            </Button>
+                        ))}
                     </div>
+                </div>
 
-                    {/* Video Section */}
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-evenly">
-                            <div>
-                                <div className="aspect-video bg-muted rounded-[0.3rem] relative mb-4">
-                                    <video
-                                        src={pitchDetails.video}
-                                        controls
-                                        className="w-full h-full object-cover rounded-[0.3rem]"
-                                    />
-                                </div>
-                                <Select
-                                    value={selectedLanguage}
-                                    onValueChange={setSelectedLanguage}
-                                >
-                                    <SelectTrigger className="w-[200px]">
-                                        <Globe2 className="h-4 w-4 mr-2" />
-                                        <SelectValue placeholder="Select Language" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="english">English</SelectItem>
-                                        <SelectItem value="arabic">Arabic</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            {/* Investor Questions */}
-                            <div className="space-y-4">
-                                <h3 className="font-medium">Investor Questions</h3>
-                                {pitchDetails.questions.map((q, i) => (
-                                    <div
-                                        key={i}
-                                        className="space-y-2"
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-sm font-medium">{q.no}. {q.question}</span>
-                                        </div>
+                {/* Main Content */}
+                <ScrollArea className="w-[65%] pr-6">
+                    <div className="space-y-6">
+                        <div>
+                            <h2 className="text-xl font-semibold">{pitchDetails.name}</h2>
+                        </div>
+
+                        {/* Video Section */}
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-evenly">
+                                <div>
+                                    <div className="aspect-video bg-muted rounded-[0.3rem] relative mb-4">
+                                        <video
+                                            src={pitchDetails.video}
+                                            controls
+                                            className="w-full h-full object-cover rounded-[0.3rem]"
+                                        />
                                     </div>
-                                ))}
+                                    <Select
+                                        value={selectedLanguage}
+                                        onValueChange={setSelectedLanguage}
+                                    >
+                                        <SelectTrigger className="w-[200px]">
+                                            <Globe2 className="h-4 w-4 mr-2" />
+                                            <SelectValue placeholder="Select Language" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="english">English</SelectItem>
+                                            <SelectItem value="arabic">Arabic</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                {/* Investor Questions */}
+                                <div className="space-y-4">
+                                    <h3 className="font-medium">Investor Questions</h3>
+                                    {pitchDetails.questions.map((q, i) => (
+                                        <div
+                                            key={i}
+                                            className="space-y-2"
+                                        >
+                                            <div className="flex items-center justify-between">
+                                                <span className="text-sm font-medium">{q.no}. {q.question}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                </div>
 
                             </div>
+
+                            {/* Pitch Info */}
+                            <div className="grid grid-cols-3 gap-4">
+                                <div className="p-4 rounded-[0.3rem] bg-muted/50">
+                                    <p className="text-sm text-muted-foreground">Location</p>
+                                    <p className="font-medium">{pitchDetails.location}</p>
+                                </div>
+                                <div className="p-4 rounded-[0.3rem] bg-muted/50">
+                                    <p className="text-sm text-muted-foreground">Stage</p>
+                                    <p className="font-medium">{pitchDetails.stage}</p>
+                                </div>
+                                <div className="p-4 rounded-[0.3rem] bg-muted/50">
+                                    <p className="text-sm text-muted-foreground">Demo Link</p>
+                                    <a
+                                        href={pitchDetails.demoLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                                    >
+                                        View Demo
+                                        <ArrowUpRight className="h-4 w-4" />
+                                    </a>
+                                </div>
+                            </div>
+
 
                         </div>
+                    </div>
+                </ScrollArea>
 
-                        {/* Pitch Info */}
-                        <div className="grid grid-cols-3 gap-4">
-                            <div className="p-4 rounded-[0.3rem] bg-muted/50">
-                                <p className="text-sm text-muted-foreground">Location</p>
-                                <p className="font-medium">{pitchDetails.location}</p>
-                            </div>
-                            <div className="p-4 rounded-[0.3rem] bg-muted/50">
-                                <p className="text-sm text-muted-foreground">Stage</p>
-                                <p className="font-medium">{pitchDetails.stage}</p>
-                            </div>
-                            <div className="p-4 rounded-[0.3rem] bg-muted/50">
-                                <p className="text-sm text-muted-foreground">Demo Link</p>
-                                <a
-                                    href={pitchDetails.demoLink}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
-                                >
-                                    View Demo
-                                    <ArrowUpRight className="h-4 w-4" />
-                                </a>
-                            </div>
+                {/* Right Sidebar */}
+                <div className="w-[25%] border-l pl-6 space-y-6">
+                    <div className="space-y-4">
+                        <div className="">
+                            <p className="text-sm text-muted-foreground">Status: <span className="font-semibold">{pitchDetails.status}</span></p>
+                            <span className="text-xs text-muted-foreground"> {pitchDetails.submittedDate}</span>
                         </div>
 
-
-                    </div>
-                </div>
-            </ScrollArea>
-
-            {/* Right Sidebar */}
-            <div className="w-[25%] border-l pl-6 space-y-6">
-                <div className="space-y-4">
-                    <div className="">
-                        <p className="text-sm text-muted-foreground">Status: <span className="font-semibold">{pitchDetails.status}</span></p>
-                        <span className="text-xs text-muted-foreground"> {new Date(pitchDetails.submittedDate).toLocaleDateString()}</span>
-                    </div>
-
-                    <Button size="sm" className=" bg-blue-600 hover:bg-blue-700">
-                        Withdraw Pitch
-                    </Button>
-                </div>
-
-                <div className="space-y-4">
-                    <div className="aspect-video bg-muted rounded-[0.3rem]">
-                        <video
-                            src={pitchDetails.investorVideo}
-                            controls
-                            className="w-full h-full object-cover rounded-[0.3rem]"
-                        />
-                    </div>
-
-                    <div>
-                        <h3 className="font-medium">{pitchDetails.program.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                            In collaboration with {pitchDetails.program.collaboration}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                            Last day to pitch: {new Date(pitchDetails.program.lastPitchDate).toLocaleDateString()}
-                        </p>
-                        <Button variant="link" className="text-xs p-0 h-auto text-blue-600 hover:text-blue-700 mt-2">
-                            Read more
+                        <Button size="sm" className=" bg-blue-600 hover:bg-blue-700">
+                            Withdraw Pitch
                         </Button>
                     </div>
+
+                    <div className="space-y-4">
+                        <div className="aspect-video bg-muted rounded-[0.3rem]">
+                            <video
+                                src={pitchDetails.investorVideo}
+                                controls
+                                className="w-full h-full object-cover rounded-[0.3rem]"
+                            />
+                        </div>
+
+                        <div>
+                            <h3 className="font-medium">{pitchDetails.program.name}</h3>
+                            <p className="text-sm text-muted-foreground">
+                                In collaboration with {pitchDetails.program.collaboration}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                                Last day to pitch: {pitchDetails.program.lastPitchDate}
+                            </p>
+                            <Button variant="link" className="text-xs p-0 h-auto text-blue-600 hover:text-blue-700 mt-2">
+                                <Link href={`/incubation/${pitchDetails.program.name}`}> Read more</Link>
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
 
-            <TeamDialog 
+            <TeamDialog
                 open={teamDialogOpen}
                 onOpenChange={setTeamDialogOpen}
             />

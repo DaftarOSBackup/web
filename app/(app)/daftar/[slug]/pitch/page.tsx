@@ -7,6 +7,14 @@ import { cn } from "@/lib/utils"
 import { PitchForm } from "@/components/forms/pitch-form"
 import Link from "next/link"
 
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};
+
 const tabs = [
   { id: 'new-pitch', icon: Send, label: 'New Pitch' }
 ]
@@ -16,21 +24,20 @@ const daftarDetails = {
   program: {
     name: "tech-startup-fund",
     collaboration: "Daftar OS",
-    lastPitchDate: "2024-04-15",
+    lastPitchDate: formatDate("2024-04-15"),
     description: "Early stage technology companies investment program focused on innovative solutions..."
   }
 }
 
 const pitchDetails = {
   status: "In Progress",
-  submittedDate: "2024-04-15",
+  submittedDate: formatDate("2024-04-15"),
   investorVideo: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   program: daftarDetails.program
 }
 
 export default function NewPitchPage({ params }: { params: { daftarId: string } }) {
   const [activeTab] = useState('new-pitch')
-
   return (
     <div className="flex gap-6 h-[calc(100vh-10rem)] container mx-auto px-4">
       {/* Left Sidebar - Tabs */}
@@ -59,51 +66,45 @@ export default function NewPitchPage({ params }: { params: { daftarId: string } 
 
       {/* Right Sidebar */}
       <div className="w-[25%] border-l pl-6 space-y-6">
-                <div className="space-y-4">
-                    <div className="">
-                        <p className="text-sm text-muted-foreground">Status: <span className="font-semibold">{pitchDetails.status}</span></p>
-                        <span className="text-xs text-muted-foreground"> {new Date(pitchDetails.submittedDate).toLocaleDateString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}</span>
-                    </div>
+        <div className="space-y-4">
+          <div className="">
+            <p className="text-sm text-muted-foreground">Status: <span className="font-semibold">{pitchDetails.status}</span></p>
+            <span className="text-xs text-muted-foreground">
+              {pitchDetails.submittedDate}
+            </span>
+          </div>
 
-                    <Button size="sm" className=" bg-blue-600 hover:bg-blue-700 text-white">
-                        Withdraw Pitch
-                    </Button>
-                </div>
+          <Button size="sm" className=" bg-blue-600 hover:bg-blue-700 text-white">
+            Withdraw Pitch
+          </Button>
+        </div>
 
-                <div className="space-y-4">
-                    <div className="aspect-video bg-muted rounded-[0.3rem]">
-                        <video
-                            src={pitchDetails.investorVideo}
-                            controls
-                            className="w-full h-full object-cover rounded-[0.3rem]"
-                        />
-                    </div>
+        <div className="space-y-4">
+          <div className="aspect-video bg-muted rounded-[0.3rem]">
+            <video
+              src={pitchDetails.investorVideo}
+              controls
+              className="w-full h-full object-cover rounded-[0.3rem]"
+            />
+          </div>
 
-                    <div>
-                        <h3 className="font-medium">{pitchDetails.program.name}</h3>
-                        <p className="text-sm text-muted-foreground">
-                            In collaboration with {pitchDetails.program.collaboration}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                            Last day to pitch: {new Date(pitchDetails.program.lastPitchDate).toLocaleDateString('en-US', { 
-                              month: 'short', 
-                              day: 'numeric',
-                              year: 'numeric'
-                            })}
-                        </p>
-                        <Link href={`/incubation/${pitchDetails.program.name}`}>
-                            <Button variant="link" className="text-xs p-0 h-auto text-blue-600 hover:text-blue-700 mt-2"
-                            >
-                                Read more
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+          <div>
+            <h3 className="font-medium">{pitchDetails.program.name}</h3>
+            <p className="text-sm text-muted-foreground">
+              In collaboration with {pitchDetails.program.collaboration}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Last day to pitch: {pitchDetails.program.lastPitchDate}
+            </p>
+            <Link href={`/incubation/${pitchDetails.program.name}`}>
+              <Button variant="link" className="text-xs p-0 h-auto text-blue-600 hover:text-blue-700 mt-2"
+              >
+                Read more
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 } 

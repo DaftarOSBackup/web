@@ -14,6 +14,15 @@ import {
 } from "@/components/ui/hover-card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};
+
 // This would come from your API
 const programDetails = {
   title: "Tech Startup Fund",
@@ -38,18 +47,17 @@ const programDetails = {
     // ... more FAQs
   ],
   updates: [
-      {
-        date: "2024-03-15",
-        content: "Successfully launched the program with 10 startups"
-      },
-      {
-        date: "2024-03-15",
-        content: "Successfully launched the program with 10 startups"
-      },
-      
-    // ... more updates
+    {
+      date: formatDate("2024-03-15"),
+      content: "Successfully launched the program with 10 startups"
+    },
+    {
+      date: formatDate("2024-03-15"),
+      content: "Successfully launched the program with 10 startups"
+    },
+
   ],
-  lastPitchDate: "2024-04-15",
+  lastPitchDate: formatDate("2024-04-15"),
   isBookmarked: false
 }
 
