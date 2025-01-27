@@ -21,10 +21,9 @@ const handler = NextAuth({
     },
     callbacks: {
         async session({ session, token }) {
-            // Add role to the session
+            // Add role and access token to the session
             if (session.user) {
                 session.user.role = token.role as "investor" | "founder" | null;
-                // Add access token to session for API calls
                 session.accessToken = token.accessToken as string | undefined;
             }
             return session;
@@ -32,40 +31,39 @@ const handler = NextAuth({
         async jwt({ token, account, profile }) {
             if (account && profile) {
                 try {
-                    const role = "investor"; // Static role assignment
-                    const endpoint = role == 'investor'
-                        ? `${process.env.BASE_URL}/investor-login/investor-sign-in/`
-                        : `${process.env.BASE_URL}/founder-login/google-sign-in/`;
+                    // Determine which API to call dynamically
+                    const endpoint = `${process.env.BASE_URL}/auth/get-role/`;
 
+                    // Call the API to determine the user's role
                     const response = await fetch(endpoint, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            id_token: account.id_token,
+                            id_token: account.id_token, // Pass the ID token
                         }),
                     });
 
                     if (response.ok) {
-                        const data = await response.json() as { access_token: string };
+                        const data = await response.json() as { access_token: string; role: string };
+
+                        // Dynamically assign the role and access token
                         token.accessToken = data.access_token;
-                        token.role = role;
+                        token.role = data.role === "investor" || data.role === "founder" ? data.role : null;
+                    } else {
+                        console.error("Failed to fetch role:", response.statusText);
+                        token.role = null;
                     }
                 } catch (error) {
-                    console.error('Authentication error:', error);
+                    console.error("Authentication error:", error);
                     token.role = null;
                 }
             }
             return token;
         },
         async redirect({ url, baseUrl }) {
-            // If the user is not authenticated, redirect to landing page
-            if (!url.startsWith(baseUrl)) {
-                return baseUrl;
-            }
-
-            // For authenticated users, handle role-based redirects
+            // Handle role-based redirects
             if (url.includes('/login/investor')) {
                 return `${baseUrl}/programs`;
             }
@@ -75,8 +73,8 @@ const handler = NextAuth({
 
             // Default fallback to landing page
             return `${baseUrl}/landing`;
-        }
-    }
+        },
+    },
 });
 
 export { handler as GET, handler as POST };
