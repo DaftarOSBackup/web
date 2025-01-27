@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Clock, Users, Check, X, Trash2, Video, MapPin, Folder, Presentation } from "lucide-react"
 import { format } from "date-fns"
 import { ScheduleMeetingDialog } from "@/components/dialogs/schedule-meeting-dialog"
+import { useToast } from "@/hooks/use-toast"
 
 
 interface Meeting {
@@ -27,7 +28,7 @@ const meetings: Meeting[] = [
   {
     id: "1",
     title: "Q1 Investment Review",
-    date: "2024-03-25",
+    date: format(new Date(), "yyyy-MM-dd"), // Today's date
     time: "10:00 AM",
     status: "Confirmed",
     attendees: ["John Doe", "Sarah Smith"],
@@ -41,7 +42,7 @@ const meetings: Meeting[] = [
   {
     id: "2",
     title: "Program Strategy Discussion",
-    date: "2024-03-27",
+    date: format((new Date(Date.now() + 86400000).toISOString()), "yyyy-MM-dd"),
     time: "2:00 PM",
     status: "Pending",
     attendees: ["Mike Johnson", "Emily Brown"],
@@ -62,18 +63,53 @@ const formatDate = (date: string) => {
   })
 }
 
+const isToday = (dateString: string) => {
+  const today = new Date()
+  const date = new Date(dateString)
+  return date.toDateString() === today.toDateString()
+}
+
 export default function MeetingsPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null)
   const [scheduleOpen, setScheduleOpen] = useState(false)
+  const { toast } = useToast()
 
   const pendingMeetings = meetings.filter(m => m.status === "Pending")
   const todayMeetings = meetings.filter(m => m.date === format(new Date(), "yyyy-MM-dd"))
 
   const currentUser = "John Doe"
 
-  const handleAccept = (meetingId: string) => {
-    console.log("Accepting meeting:", meetingId)
+  const handleAccept = async (meetingId: string) => {
+    try {
+      // Simulating API call - replace with actual API call
+      // await api.meetings.accept(meetingId)
+
+      // Update local state
+      const updatedMeeting = meetings.find(m => m.id === meetingId)
+      if (updatedMeeting) {
+        updatedMeeting.status = "Confirmed"
+        // Add to today's meetings if it's today
+        if (isToday(updatedMeeting.date)) {
+          todayMeetings.push(updatedMeeting)
+        }
+      }
+
+      toast({
+        title: "Meeting Accepted",
+        description: "The meeting has been added to your schedule",
+        variant: "success",
+      })
+
+      // Optionally close or update UI
+      setSelectedMeeting(null)
+    } catch (error) {
+      toast({
+        title: "Error accepting meeting",
+        description: (error as Error).message,
+        variant: "error",
+      })
+    }
   }
 
   const handleReject = (meetingId: string) => {
@@ -89,7 +125,7 @@ export default function MeetingsPage() {
       {/* Header - Removed local search, kept only Schedule button */}
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Meetings</h2>
-        <Button 
+        <Button
           className="bg-blue-600 hover:bg-blue-700 text-white"
           onClick={() => setScheduleOpen(true)}
         >
@@ -112,22 +148,28 @@ export default function MeetingsPage() {
 
           <div className="space-y-3">
             <h3 className="text-sm font-medium">Waiting Confirmation</h3>
-            {pendingMeetings.map((meeting) => (
-              <div
-                key={meeting.id}
-                className="p-3 border rounded-[0.3rem] space-y-2 cursor-pointer hover:border-blue-600"
-                onClick={() => setSelectedMeeting(meeting)}
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className="font-medium text-sm">{meeting.title}</h4>
-                    <p className="text-xs text-muted-foreground">
-                      {formatDate(meeting.date)} at {meeting.time}
-                    </p>
+            {pendingMeetings.length === 0 ? (
+              <div className="text-sm text-muted-foreground">
+                No pending meetings
+              </div>
+            ) : (
+              pendingMeetings.map((meeting) => (
+                <div
+                  key={meeting.id}
+                  className="p-3 border rounded-[0.3rem] space-y-2 cursor-pointer hover:border-blue-600"
+                  onClick={() => setSelectedMeeting(meeting)}
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h4 className="font-medium text-sm">{meeting.title}</h4>
+                      <p className="text-xs text-muted-foreground">
+                        {formatDate(meeting.date)} at {meeting.time}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 
@@ -180,12 +222,17 @@ export default function MeetingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-2">
                     <h2 className="text-lg font-semibold">{selectedMeeting.title}</h2>
-                    <Badge variant="secondary">
-                      {selectedMeeting.status}
-                    </Badge>
+                    <div className="flex gap-2">
+                      <Badge variant="secondary">
+                        {selectedMeeting.status}
+                      </Badge>
+                      {isToday(selectedMeeting.date) && (
+                        <Badge variant="default" className="bg-green-500 hover:bg-green-600">
+                          Today
+                        </Badge>
+                      )}
+                    </div>
                   </div>
-                  
-                  
                 </div>
               </div>
 
@@ -242,32 +289,32 @@ export default function MeetingsPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
+                  <Button
+                    size="sm"
+                    className="bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
+                    onClick={() => handleAccept(selectedMeeting.id)}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="bg-red-600 hover:bg-red-700 rounded-[0.3rem] text-white"
+                    onClick={() => handleReject(selectedMeeting.id)}
+                  >
+                    Reject
+                  </Button>
+                  {selectedMeeting.createdBy === currentUser && (
                     <Button
                       size="sm"
-                      className="bg-blue-600 hover:bg-blue-700 text-white rounded-[0.3rem]"
-                      onClick={() => handleAccept(selectedMeeting.id)}
+                      variant="outline"
+                      className="text-red-600 hover:text-red-700"
+                      onClick={() => handleDelete(selectedMeeting.id)}
                     >
-                      Accept
+                      <Trash2 className="h-4 w-4" />
+                      Delete
                     </Button>
-                    <Button
-                      size="sm"
-                      className="bg-red-600 hover:bg-red-700 rounded-[0.3rem] text-white"
-                      onClick={() => handleReject(selectedMeeting.id)}
-                    >
-                      Reject
-                    </Button>
-                    {selectedMeeting.createdBy === currentUser && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="text-red-600 hover:text-red-700"
-                        onClick={() => handleDelete(selectedMeeting.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                        Delete
-                      </Button>
-                    )}
-                  </div>
+                  )}
+                </div>
               </div>
             </div>
           ) : (
@@ -278,7 +325,7 @@ export default function MeetingsPage() {
         </div>
       </div>
 
-      <ScheduleMeetingDialog 
+      <ScheduleMeetingDialog
         open={scheduleOpen}
         onOpenChange={setScheduleOpen}
       />
