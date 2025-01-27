@@ -17,7 +17,7 @@ export function SelectDaftarDialog({ open, onOpenChange }: SelectDaftarDialogPro
   const router = useRouter()
 
   const handleSelect = (daftarId: string) => {
-    router.push(`/daftar/${daftarId}/pitch`)
+    router.push(`/studio`)
     onOpenChange(false)
   }
 

@@ -69,57 +69,57 @@ export const topNavConfig = {
 export const investorStudioNavItems = [
   {
     title: "Program Details",
-    url: "/programs/studio/details",
+    url: "/studio/details",
     icon: FileSpreadsheet,
   },
   {
     title: "Collaboration",
-    url: "/programs/studio/collaboration",
+    url: "/studio/collaboration",
     icon: Users2,
   },
   {
     title: "Program Document",
-    url: "/programs/studio/document",
+    url: "/studio/document",
     icon: FileText,
   },
   {
     title: "Audience",
-    url: "/programs/studio/audience",
+    url: "/studio/audience",
     icon: Users,
   },
   {
     title: "Founder's Pitch",
-    url: "/programs/studio/founder-pitch",
+    url: "/studio/founder-pitch",
     icon: Video,
   },
   {
     title: "Investor's Pitch",
-    url: "/programs/studio/investor-pitch",
+    url: "/studio/investor-pitch",
     icon: MessageCircle,
   },
   {
     title: "FAQs",
-    url: "/programs/studio/faqs",
+    url: "/studio/faqs",
     icon: HelpCircle,
   },
   {
     title: "Invite from Database",
-    url: "/programs/studio/invite",
+    url: "/studio/invite",
     icon: UserPlus,
   },
   {
     title: "Approval",
-    url: "/programs/studio/approval",
+    url: "/studio/approval",
     icon: CheckCircle,
   },
   {
     title: "Schedule",
-    url: "/programs/studio/schedule",
+    url: "/studio/schedule",
     icon: Calendar,
   },
   {
     title: "Delete",
-    url: "/programs/studio/delete",
+    url: "/studio/delete",
     icon: Trash2,
     className: "text-red-500 hover:text-red-600",
   },
@@ -128,51 +128,51 @@ export const investorStudioNavItems = [
 export const founderStudioNavItems = [
   {
     title: "Pitch Name",
-    url: "/programs/studio/pitch-name",
+    url: "/studio/pitch-name",
     icon: FileText,
   },
   {
     title: "Investor's Questions",
-    url: "/programs/studio/investor-questions",
+    url: "/studio/investor-questions",
     icon: HelpCircle,
   },
   {
     title: "Pitch",
-    url: "/programs/studio/pitch",
+    url: "/studio/pitch",
     icon: Video,
   },
   {
     title: "Meetings",
-    url: "/programs/studio/meetings",
+    url: "/studio/meetings",
     icon: Calendar,
   },
   {
     title: "Documents",
-    url: "/programs/studio/documents",
+    url: "/studio/documents",
     icon: Folder,
     subItems: [
       {
         title: "Private",
-        url: "/programs/studio/documents/private",
+        url: "/studio/documents/private",
       },
       {
         title: "Received",
-        url: "/programs/studio/documents/received",
+        url: "/studio/documents/received",
       },
       {
         title: "Sent",
-        url: "/programs/studio/documents/sent",
+        url: "/studio/documents/sent",
       }
     ]
   },
   {
     title: "Offer",
-    url: "/programs/studio/offer",
+    url: "/studio/offer",
     icon: FileSpreadsheet,
   },
   {
     title: "Delete",
-    url: "/programs/studio/delete",
+    url: "/studio/delete",
     icon: Trash2,
     className: "text-red-500 hover:text-red-600",
   },

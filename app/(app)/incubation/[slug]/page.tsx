@@ -108,7 +108,7 @@ export default function ProgramPage({ params }: { params: { slug: string } }) {
             </div>
 
             {/* Title and Actions Section */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-4">
               <div>
                 <h1 className="text-2xl font-bold">{programDetails.title}</h1>
                 <div className="flex items-center gap-2 mt-1">
