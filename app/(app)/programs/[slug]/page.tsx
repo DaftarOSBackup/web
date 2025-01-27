@@ -157,9 +157,11 @@ export default function ProgramDetailsPage({ params }: { params: { slug: string 
           >
             End Scouting
           </Button>
-          <Button variant="outline" size="sm">
-            <span className="text-xs">Studio</span>
-          </Button>
+          <Link href="/studio/details">
+            <Button variant="outline" size="sm">
+              <span className="text-xs">Studio</span>
+            </Button>
+          </Link>
           <Button
             variant="outline"
             size="sm"
