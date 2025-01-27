@@ -57,7 +57,7 @@ export default function ProgramsPage() {
   const filteredPrograms = Object.entries(programStatus).reduce((acc, [key, programs]) => {
     const filtered = programs.filter(program => {
       const matchesSearch = program.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          program.postedby.toLowerCase().includes(searchQuery.toLowerCase())
+        program.postedby.toLowerCase().includes(searchQuery.toLowerCase())
       const matchesFilter = filterValue === 'all' || program.status.toLowerCase() === filterValue.toLowerCase()
       return matchesSearch && matchesFilter
     })
@@ -67,16 +67,16 @@ export default function ProgramsPage() {
   return (
     <div className="space-y-6 container mx-auto">
       <div className="flex items-center justify-end gap-2">
-        
-        <Link href="/programs/studio/details">
+
+        <Link href="/studio/details">
           <Button size="sm" className="bg-blue-600 hover:bg-blue-700 h-9 text-white">
             New Program
           </Button>
         </Link>
 
-        <Button 
-          variant="outline" 
-          size="sm" 
+        <Button
+          variant="outline"
+          size="sm"
           onClick={() => setInsightsOpen(true)}
           className="h-9"
         >
@@ -86,8 +86,8 @@ export default function ProgramsPage() {
 
       <div className="grid grid-cols-4 gap-6">
         {Object.entries(filteredPrograms).map(([status, programs]) => (
-          <div 
-            key={status} 
+          <div
+            key={status}
             className="bg-muted/30 rounded-lg p-4 min-h-[calc(100vh-12rem)]"
           >
             <div className="flex items-center justify-between mb-4">
@@ -122,8 +122,8 @@ export default function ProgramsPage() {
         ))}
       </div>
 
-      <InsightsDialog 
-        open={insightsOpen} 
+      <InsightsDialog
+        open={insightsOpen}
         onOpenChange={setInsightsOpen}
       />
     </div>
