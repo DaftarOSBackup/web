@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { ReportDialog } from "@/components/dialogs/report-dialog"
 import { useRouter } from "next/navigation"
 import { ScheduleMeetingDialog } from "@/components/dialogs/schedule-meeting-dialog"
-import OfferPage from "@/app/(app)/programs/studio/offer/page"
+import OfferPage from "@/app/(app)/studio/offer/page"
 
 // Sample data
 const pitchDetails = {
