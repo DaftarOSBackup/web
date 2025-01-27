@@ -43,6 +43,17 @@ const filterOptions = {
     { value: 'accepted', label: 'Accepted' },
     { value: 'cancelled', label: 'Deal Cancelled' },
   ],
+  collaboration: [
+    { value: 'all', label: 'All Collaboration' },
+    { value: 'active', label: 'Active' },
+    { value: 'archived', label: 'Archived' },
+  ],
+  document: [
+    { value: 'all', label: 'All Document' },
+    { value: 'pdf', label: 'PDF Files' },
+    { value: 'doc', label: 'Word Files' },
+    { value: 'other', label: 'Other Files' },
+  ],
 }
 
 const searchPlaceholders = {
@@ -51,17 +62,27 @@ const searchPlaceholders = {
   incubation: 'Search incubation programs...',
   daftar: 'Search daftar...',
   'pitch-board': 'Search pitches...',
+  collaboration: 'Search collaboration...',
+  document: 'Search document...',
 }
 
 export function SearchAndFilter() {
   const pathname = usePathname()
   const { searchQuery, setSearchQuery, filterValue, setFilterValue } = useSearch()
   
-  // Get the first segment of the path after home
-  const segment = pathname.split('/')[1]
+  // Get the path segments
+  const segments = pathname.split('/')
+  
+  // Determine the key for filter options
+  let filterKey = segments[1] // Default to first segment
+  
+  // Handle studio paths
+  if (segments[1] === 'studio') {
+    filterKey = segments[2] // Use the second segment for studio routes
+  }
   
   // If the current page doesn't have search/filter options, don't render
-  if (!filterOptions[segment as keyof typeof filterOptions]) {
+  if (!filterOptions[filterKey as keyof typeof filterOptions]) {
     return null
   }
 
@@ -72,7 +93,7 @@ export function SearchAndFilter() {
         <Input 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={searchPlaceholders[segment as keyof typeof searchPlaceholders] || 'Search...'}
+          placeholder={searchPlaceholders[filterKey as keyof typeof searchPlaceholders] || 'Search...'}
           className="pl-8 w-[250px] h-9" 
         />
       </div>
@@ -85,7 +106,7 @@ export function SearchAndFilter() {
           <SelectValue placeholder="Filter" />
         </SelectTrigger>
         <SelectContent>
-          {filterOptions[segment as keyof typeof filterOptions]?.map((option) => (
+          {filterOptions[filterKey as keyof typeof filterOptions]?.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>

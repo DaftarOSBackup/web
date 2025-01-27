@@ -1,30 +1,48 @@
 "use client"
-import { useState, useCallback, useRef } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { useRouter } from "next/navigation"
-import { Upload, File, X, Search, Filter } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Upload, File, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { useSearch } from "@/contexts/search-context"
 
 interface DocumentDetails {
+  title: string;
+  url: string;
   files: File[]
 }
 
 export default function DocumentPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+  const programId = searchParams.get('programId')
+  const { searchQuery, filterValue } = useSearch()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const [document, setDocument] = useState<DocumentDetails>({
+  const [details, setDetails] = useState<DocumentDetails>({
+    title: "",
+    url: "",
     files: []
   })
   const [dragActive, setDragActive] = useState(false)
+
+  useEffect(() => {
+    if (mode === 'edit' && programId) {
+      fetchDocumentDetails(programId)
+    }
+  }, [mode, programId])
+
+  const fetchDocumentDetails = async (id: string) => {
+    // Simulate API call
+    const data = {
+      title: "Program Document",
+      url: "https://example.com/doc",
+      files: []
+    }
+    setDetails(data)
+  }
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -45,24 +63,28 @@ export default function DocumentPage() {
       file => file.type === "application/pdf"
     )
     if (files.length > 0) {
-      setDocument(prev => ({ files: [...prev.files, ...files] }))
+      setDetails(prev => ({ ...prev, files: [...prev.files, ...files] }))
     }
   }, [])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : []
     if (files.length > 0) {
-      setDocument(prev => ({ files: [...prev.files, ...files] }))
+      setDetails(prev => ({ ...prev, files: [...prev.files, ...files] }))
     }
   }
 
-  const handleSave = () => {
-    console.log("Saving documents:", document)
-    router.push("/studio/audience")
+  const handleSave = async () => {
+    if (mode === 'edit') {
+      console.log("Updating document:", programId, details)
+    } else {
+      console.log("Creating document:", details)
+    }
   }
 
   const removeFile = (index: number) => {
-    setDocument(prev => ({
+    setDetails(prev => ({
+      ...prev,
       files: prev.files.filter((_, i) => i !== index)
     }))
   }
@@ -71,30 +93,25 @@ export default function DocumentPage() {
     fileInputRef.current?.click()
   }
 
+  // Filter files based on search and filter
+  const filteredFiles = details.files.filter(file => {
+    const matchesSearch = file.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesFilter = filterValue === 'all' || 
+                         (filterValue === 'pdf' && file.type === 'application/pdf') ||
+                         (filterValue === 'doc' && file.type.includes('word')) ||
+                         (filterValue === 'other' && !file.type.includes('pdf') && !file.type.includes('word'))
+    return matchesSearch && matchesFilter
+  })
+
   return (
     <div className="space-y-6 container mx-auto px-4">
-      <div className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">
-          Documents uploaded here are only visible to investors
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search documents..." className="pl-8 w-[250px]" />
-          </div>
-          <Select>
-            <SelectTrigger>
-              <Filter className="h-4 w-4" />
-              <SelectValue/>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Documents</SelectItem>
-              <SelectItem value="pdf">PDF Files</SelectItem>
-              <SelectItem value="doc">Word Files</SelectItem>
-              <SelectItem value="other">Other Files</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+      <div>
+        <h1 className="text-2xl font-semibold">
+          {mode === 'edit' ? 'Edit Documents' : 'Add Documents'}
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          {mode === 'edit' ? 'Update program documents' : 'Add program documents'}
+        </p>
       </div>
 
       <div className="pr-8 space-y-6">
@@ -138,11 +155,11 @@ export default function DocumentPage() {
             </div>
           </div>
 
-          {document.files.length > 0 && (
+          {filteredFiles.length > 0 && (
             <div className="space-y-2 pt-4">
               <Label className="text-sm text-muted-foreground">Uploaded Files</Label>
               <div className="space-y-2">
-                {document.files.map((file, index) => (
+                {filteredFiles.map((file, index) => (
                   <div 
                     key={`${file.name}-${index}`}
                     className="flex items-center gap-2 p-4 border rounded-[0.3rem] bg-muted/50"
@@ -168,9 +185,9 @@ export default function DocumentPage() {
           <Button 
             onClick={handleSave}
             className="bg-blue-600 hover:bg-blue-700 text-white"
-            disabled={document.files.length === 0}
+            disabled={details.files.length === 0}
           >
-            Save
+            {mode === 'edit' ? 'Update' : 'Save'}
           </Button>
         </div>
       </div>

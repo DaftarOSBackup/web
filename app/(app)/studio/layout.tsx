@@ -1,3 +1,5 @@
+"use client"
+import { useSearchParams } from "next/navigation"
 import { StudioNav } from "@/components/navbar/studio-nav"
 
 export default function StudioLayout({
@@ -5,15 +7,14 @@ export default function StudioLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <div className="flex flex-col min-h-[80%]">
-      {/* Top Navigation */}
-      <StudioNav/>
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+  const programId = searchParams.get('programId')
 
-      {/* Main Content Area */}
-      <div className="flex-1 w-full">
-        <main className="p-4">{children}</main>
-      </div>
+  return (
+    <div className="space-y-6">
+      <StudioNav mode={mode} programId={programId} />
+      {children}
     </div>
   )
 }

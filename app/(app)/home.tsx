@@ -1,8 +1,32 @@
 "use client"
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useRole } from "@/contexts/role-context"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ArrowRight } from "lucide-react"
 
 export default function HomePage() {
+  const router = useRouter()
+  const { role, isAuthenticated } = useRole()
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/landing")
+      return
+    }
+
+    if (role === "investor") {
+      router.push("/programs")
+    } else if (role === "founder") {
+      router.push("/incubation")
+    }
+  }, [isAuthenticated, role, router])
+
+  // Show loading or nothing while redirecting
+  return null
+}
+
+function HomeContent() {
   return (
     <ScrollArea className="h-[calc(100vh-8rem)]">
       <div className="max-w-3xl mx-auto space-y-16 py-8">

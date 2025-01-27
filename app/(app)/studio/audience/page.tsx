@@ -1,9 +1,9 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation"
 import {
   Select,
   SelectContent,
@@ -20,10 +20,14 @@ interface AudienceDetails {
   ageMax: string
   stage: string
   sector: string
+  targetIndustries: string[]
+  stages: string[]
 }
 
 export default function AudiencePage() {
-  const router = useRouter()
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+  const programId = searchParams.get('programId')
   const [audience, setAudience] = useState<AudienceDetails>({
     location: "",
     community: "",
@@ -32,11 +36,38 @@ export default function AudiencePage() {
     ageMax: "",
     stage: "",
     sector: "",
+    targetIndustries: [],
+    stages: []
   })
 
-  const handleSave = () => {
-    console.log("Saving audience:", audience)
-    router.push("/studio/founder-pitch")
+  useEffect(() => {
+    if (mode === 'edit' && programId) {
+      fetchAudienceDetails(programId)
+    }
+  }, [mode, programId])
+
+  const fetchAudienceDetails = async (id: string) => {
+    // Simulate API call
+    const data = {
+      location: "UAE",
+      community: "auto-rickshaw",
+      gender: "male",
+      ageMin: "20",
+      ageMax: "30",
+      stage: "idea",
+      sector: "accounting",
+      targetIndustries: ["Tech", "Healthcare"],
+      stages: ["Seed", "Series A"]
+    }
+    setAudience(data)
+  }
+
+  const handleSave = async () => {
+    if (mode === 'edit') {
+      console.log("Updating audience:", programId, audience)
+    } else {
+      console.log("Creating audience:", audience)
+    }
   }
 
   return (
@@ -294,7 +325,7 @@ export default function AudiencePage() {
             onClick={handleSave}
             className="bg-blue-600 hover:bg-blue-700 text-white"
           >
-            Save
+            {mode === 'edit' ? 'Update' : 'Save'}
           </Button>
         </div>
       </div>

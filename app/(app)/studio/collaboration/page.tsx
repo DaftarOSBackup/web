@@ -1,4 +1,6 @@
 "use client"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -17,6 +19,17 @@ import {
 } from "@/components/ui/hover-card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
+import { SearchAndFilter } from "@/components/navbar/search-and-filter"
+import { useSearch } from "@/contexts/search-context"
+
+// Format date helper
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+};
 
 // Sample data
 const collaborators = [
@@ -60,9 +73,63 @@ const collaborators = [
   },
 ]
 
+interface CollaborationDetails {
+  partner: string;
+  // Add other fields
+}
+
 export default function CollaborationPage() {
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+  const programId = searchParams.get('programId')
+  const { searchQuery, filterValue } = useSearch()
+  const [details, setDetails] = useState<CollaborationDetails>({
+    partner: "",
+  })
+
+  // Filter collaborators based on search and filter
+  const filteredCollaborators = collaborators.filter(collaborator => {
+    const matchesSearch = collaborator.daftarName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         collaborator.daftarId.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesFilter = filterValue === 'all' || collaborator.type.toLowerCase() === filterValue.toLowerCase()
+    return matchesSearch && matchesFilter
+  })
+
+  useEffect(() => {
+    if (mode === 'edit' && programId) {
+      fetchCollaborationDetails(programId)
+    }
+  }, [mode, programId])
+
+  const fetchCollaborationDetails = async (id: string) => {
+    // Simulate API call
+    const data = {
+      partner: "Example Partner"
+    }
+    setDetails(data)
+  }
+
+  const handleSave = async () => {
+    if (mode === 'edit') {
+      console.log("Updating collaboration:", programId, details)
+    } else {
+      console.log("Creating collaboration:", details)
+    }
+  }
+
   return (
     <div className="space-y-6 container mx-auto px-4">
+      <div>
+        <h1 className="text-2xl font-semibold">
+          {mode === 'edit' ? 'Edit Collaboration' : 'Add Collaboration'}
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          {mode === 'edit' ? 'Update collaboration details' : 'Add collaboration details'}
+        </p>
+      </div>
+
+      
+
       {/* Daftar ID Input */}
       <div className="max-w-md">
         <label className="text-sm font-medium">
@@ -76,29 +143,9 @@ export default function CollaborationPage() {
         </div>
       </div>
 
-      {/* Search and Filter */}
-      <div className="flex items-center justify-end gap-2">
-      <div className="relative w-[200px]">
-          <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Search collaborators..." className="pl-8" />
-        </div>
-        <Select>
-          <SelectTrigger className="w-fit">
-            <Filter className="h-4 w-4" />
-            <SelectValue/>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            <SelectItem value="program-manager">Program Manager</SelectItem>
-            <SelectItem value="analyst">Analyst</SelectItem>
-          </SelectContent>
-        </Select>
-        
-      </div>
-
       {/* Collaborators List */}
       <div className="space-y-3">
-        {collaborators.map((collaborator) => (
+        {filteredCollaborators.map((collaborator) => (
           <div 
             key={collaborator.id}
             className="flex items-center justify-between p-4 border rounded-[0.3rem]"
@@ -159,7 +206,7 @@ export default function CollaborationPage() {
                   {collaborator.status}
                 </Badge>
                 <p className="text-xs text-muted-foreground">
-                  {new Date(collaborator.addedAt).toLocaleString()}
+                  {formatDate(collaborator.addedAt)}
                 </p>
               </div>
               <Button 
@@ -172,6 +219,12 @@ export default function CollaborationPage() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="flex justify-center">
+        <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700 text-white">
+          {mode === 'edit' ? 'Update' : 'Save'}
+        </Button>
       </div>
     </div>
   )

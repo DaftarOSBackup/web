@@ -30,7 +30,9 @@ export function TopNav() {
                     pathname.includes('/meetings') || 
                     pathname.includes('/incubation') ||
                     pathname.includes('/daftar') ||
-                    pathname.includes('/pitch-board')
+                    pathname.includes('/pitch-board') ||
+                    pathname.includes('/studio/collaboration') ||
+                    pathname.includes('/studio/document')
 
   const handleActionClick = (action: string) => {
     switch (action) {

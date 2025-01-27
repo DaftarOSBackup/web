@@ -1,67 +1,94 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { useRouter } from "next/navigation"
 
 interface ProgramDetails {
-  name: string
-  note: string
+  name: string;
+  description: string;
+  // Add other fields as needed
 }
 
 export default function ProgramDetailsPage() {
-  const router = useRouter()
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+  const programId = searchParams.get('programId')
   const [details, setDetails] = useState<ProgramDetails>({
     name: "",
-    note: "",
+    description: "",
   })
 
-  const handleSave = () => {
-    // Add save logic here
-    console.log("Saving program details:", details)
-    // Navigate to next section
-    router.push("/studio/document")
+  useEffect(() => {
+    if (mode === 'edit' && programId) {
+      // Fetch program details and set them
+      // This is where you'd make an API call to get the program details
+      fetchProgramDetails(programId)
+    }
+  }, [mode, programId])
+
+  const fetchProgramDetails = async (id: string) => {
+    // Simulate API call
+    const data = {
+      name: "Example Program",
+      description: "Program description..."
+    }
+    setDetails(data)
+  }
+
+  const handleSave = async () => {
+    if (mode === 'edit') {
+      // Update existing program
+      console.log("Updating program:", programId, details)
+    } else {
+      // Create new program
+      console.log("Creating new program:", details)
+    }
   }
 
   return (
     <div className="space-y-6 container mx-auto px-4">
-      <div className="pr-8 space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold">
+          {mode === 'edit' ? 'Edit Program Details' : 'Create New Program'}
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          {mode === 'edit' ? 'Update your program information' : 'Enter details for your new program'}
+        </p>
+      </div>
+
+      <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="name">Program Name</Label>
+          <Label>Program Name</Label>
           <Input
-            id="name"
             value={details.name}
             onChange={(e) => setDetails({ ...details, name: e.target.value })}
             placeholder="Enter program name"
-            className="h-9 text-sm"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="note">Quick Note for Founders</Label>
-          <div className="text-xs text-muted-foreground mb-2">
-            Provide a brief description of what founders need to know before applying.
-          </div>
+          <Label>Description</Label>
           <Textarea
-            id="note"
-            value={details.note}
-            onChange={(e) => setDetails({ ...details, note: e.target.value })}
-            placeholder="Write a quick note for founders..."
-            className="min-h-[300px] text-sm resize-none"
+            value={details.description}
+            onChange={(e) => setDetails({ ...details, description: e.target.value })}
+            placeholder="Enter program description"
+            className="min-h-[200px]"
           />
         </div>
 
-        <div className="pt-4 flex justify-center">
-          <Button 
-            onClick={handleSave}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            Save
+        <div className="flex justify-center">
+        <Button 
+          onClick={handleSave}
+          className="bg-blue-600 hover:bg-blue-700 text-white"
+        >
+          {mode === 'edit' ? 'Update Program' : 'Create Program'}
           </Button>
         </div>
       </div>
     </div>
   )
 } 
+
