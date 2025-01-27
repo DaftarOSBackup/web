@@ -5,7 +5,7 @@ import { Upload } from "lucide-react"
 
 export default function DocumentsPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 container mx-auto px-4">
       <div>
         <h1 className="text-2xl font-semibold">Documents</h1>
         <p className="text-sm text-muted-foreground">Manage your pitch documents</p>

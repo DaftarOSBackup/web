@@ -31,9 +31,10 @@ const approvalRequests = [
 
 export default function PitchPage() {
   return (
-    <ScrollArea className="h-[calc(100vh-7rem)]">
-      <div className="space-y-8">
-        <div>
+    <div className="space-y-6 container mx-auto px-4">
+      <ScrollArea className="h-[calc(100vh-7rem)]">
+        <div className="space-y-8">
+          <div>
           <h1 className="text-2xl font-semibold">Pitch</h1>
           <p className="text-sm text-muted-foreground">What are you looking for from the investor?</p>
         </div>
@@ -75,5 +76,6 @@ export default function PitchPage() {
         </div>
       </div>
     </ScrollArea>
+    </div>
   )
 } 

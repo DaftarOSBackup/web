@@ -66,7 +66,7 @@ export const topNavConfig = {
   ]
 }
 
-export const studioNavItems = [
+export const investorStudioNavItems = [
   {
     title: "Program Details",
     url: "/programs/studio/details",

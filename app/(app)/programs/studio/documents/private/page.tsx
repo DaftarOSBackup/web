@@ -23,6 +23,7 @@ const documents = [
 
 export default function PrivateDocumentsPage() {
   return (
+    <div className="space-y-6 container mx-auto px-4">
     <ScrollArea className="h-[calc(100vh-7rem)]">
       <div className="space-y-4">
         {/* Header with Search and Upload */}
@@ -74,5 +75,6 @@ export default function PrivateDocumentsPage() {
         </div>
       </div>
     </ScrollArea>
+    </div>
   )
 } 

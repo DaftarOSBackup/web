@@ -59,9 +59,10 @@ export default function MeetingsPage() {
     }, [selectedMeeting])
 
     return (
-        <ScrollArea className="h-[calc(100vh-7rem)]">
-            <div className="space-y-6">
-                <div className="flex items-center justify-between">
+        <div className="space-y-6 container mx-auto px-4">
+            <ScrollArea className="h-[calc(100vh-7rem)]">
+                <div className="space-y-6">
+                    <div className="flex items-center justify-between">
                     <h2 className="text-lg font-semibold">Meetings</h2>
                     <Button
                         size="sm"
@@ -191,5 +192,6 @@ export default function MeetingsPage() {
                 />
             </div>
         </ScrollArea>
+        </div>
     )
 } 

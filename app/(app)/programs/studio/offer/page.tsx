@@ -55,9 +55,10 @@ const pitchHistory = [
 
 export default function OfferPage() {
   return (
-    <ScrollArea className="h-[calc(100vh-7rem)]">
-      <div className="space-y-8">
-        <div>
+    <div className="space-y-6 container mx-auto px-4">
+      <ScrollArea className="h-[calc(100vh-7rem)]">
+        <div className="space-y-8">
+          <div>
           <h1 className="text-2xl font-semibold">Offer</h1>
           <p className="text-sm text-muted-foreground">View and manage program offers</p>
         </div>
@@ -160,8 +161,9 @@ export default function OfferPage() {
               </div>
             ))}
           </div>
+            </div>
         </div>
-      </div>
     </ScrollArea>
+    </div>
   )
 } 

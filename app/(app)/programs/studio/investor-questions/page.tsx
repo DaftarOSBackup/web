@@ -53,7 +53,7 @@ export default function InvestorQuestionsPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 container mx-auto px-4">
       <ScrollArea className="h-[calc(100vh-7rem)]">
         <div>
           <h1 className="text-2xl font-semibold">Investor's Questions</h1>

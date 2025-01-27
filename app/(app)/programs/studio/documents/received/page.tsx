@@ -23,9 +23,10 @@ const documents = [
 
 export default function ReceivedDocumentsPage() {
   return (
-    <ScrollArea className="h-[calc(100vh-7rem)]">
-      <div className="space-y-4">
-        {/* Documents List */}
+    <div className="space-y-6 container mx-auto px-4">
+      <ScrollArea className="h-[calc(100vh-7rem)]">
+        <div className="space-y-4">
+          {/* Documents List */}
         <div className="space-y-3">
           {documents.map((doc) => (
             <div
@@ -56,8 +57,9 @@ export default function ReceivedDocumentsPage() {
               </div>
             </div>
           ))}
+          </div>
         </div>
-      </div>
-    </ScrollArea>
+      </ScrollArea>
+    </div>
   )
 } 
