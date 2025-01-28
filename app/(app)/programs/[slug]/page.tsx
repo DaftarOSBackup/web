@@ -201,7 +201,10 @@ export default function ProgramDetailsPage({ params }: { params: { slug: string 
 
             <div className="space-y-3">
               {column.pitches.map((pitch) => (
-                <div key={pitch.id}>
+                <Link 
+                  key={pitch.id}
+                  href={`/programs/${params.slug}/details/${pitch.id}`}
+                >
                   <div className="h-6 flex items-center justify-end gap-2 mb-2">
                     {pitch.isDeleted && (
                       <>
@@ -225,7 +228,7 @@ export default function ProgramDetailsPage({ params }: { params: { slug: string 
                       Believer {pitch.Believer} out of 5
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
 
               {column.pitches.length === 0 && (
