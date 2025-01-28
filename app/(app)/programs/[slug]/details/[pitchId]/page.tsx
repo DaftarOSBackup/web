@@ -192,12 +192,10 @@ interface MeetingDetails {
 
 export default function PitchDetailsPage({ params }: { params: { slug: string; pitchId: string } }) {
   const [activeSection, setActiveSection] = useState("investors-note")
-  const [selectedDocType, setSelectedDocType] = useState("private")
   const [selectedMeeting, setSelectedMeeting] = useState<string | null>(null)
   const [selectedMeetingDetails, setSelectedMeetingDetails] = useState<MeetingDetails | null>(null)
   const [reportDialogOpen, setReportDialogOpen] = useState(false)
   const [scheduleMeetingOpen, setScheduleMeetingOpen] = useState(false)
-  const router = useRouter()
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
   useEffect(() => {

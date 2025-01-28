@@ -1,9 +1,13 @@
 "use client"
+import { Suspense } from "react"
+import { Loading } from "@/components/loading"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Upload } from "lucide-react"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
-export default function DocumentsPage() {
+function DocumentsContent() {
+  const { mode, programId } = usePageParams()
   return (
     <div className="space-y-6 container mx-auto px-4">
       <div>
@@ -34,5 +38,13 @@ export default function DocumentsPage() {
         </TabsContent>
       </Tabs>
     </div>
+  )
+}
+
+export default function DocumentsPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <DocumentsContent />
+    </Suspense>
   )
 } 

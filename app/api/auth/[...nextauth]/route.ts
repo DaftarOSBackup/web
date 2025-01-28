@@ -25,6 +25,7 @@ const handler = NextAuth({
             if (session.user) {
                 session.user.role = token.role as "investor" | "founder" | null;
                 session.accessToken = token.accessToken as string | undefined;
+                session.user.email = token.email as string | undefined;
             }
             return session;
         },
@@ -32,7 +33,7 @@ const handler = NextAuth({
             if (account && profile) {
                 try {
                     // Determine which API to call dynamically
-                    const endpoint = `https://888c-14-139-122-17.ngrok-free.app/auth/get-role/`;
+                    const endpoint = `https://2939-14-139-122-17.ngrok-free.app/auth/get-role/`;
 
                     // Call the API to determine the user's role
                     const response = await fetch(endpoint, {
@@ -47,9 +48,15 @@ const handler = NextAuth({
 
                     if (response.ok) {
                         const data = await response.json() as { access_token: string; role: string };
-
+                        if (token.email === "daftarosbackup@gmail.com") {
+                            token.role = "investor"
+                        }
+                        else {
+                            token.role = "founder"
+                        }
                         // Dynamically assign the role and access token
                         token.accessToken = data.access_token;
+
                         token.role = data.role === "investor" || data.role === "founder" ? data.role : null;
                     } else {
                         console.error("Failed to fetch role:", response.statusText);

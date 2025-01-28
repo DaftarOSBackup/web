@@ -1,4 +1,7 @@
 "use client"
+import { Suspense } from "react"
+import { useSearchParams } from "next/navigation"
+import { Loading } from "@/components/loading"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Textarea } from "@/components/ui/textarea"
@@ -29,7 +32,9 @@ const approvalRequests = [
   }
 ]
 
-export default function PitchPage() {
+function PitchContent() {
+  const searchParams = useSearchParams()
+  
   return (
     <div className="space-y-6 container mx-auto px-4">
       <ScrollArea className="h-[calc(100vh-7rem)]">
@@ -77,5 +82,13 @@ export default function PitchPage() {
       </div>
     </ScrollArea>
     </div>
+  )
+}
+
+export default function PitchPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <PitchContent />
+    </Suspense>
   )
 } 

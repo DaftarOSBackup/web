@@ -1,12 +1,15 @@
 "use client"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Play, Upload, Trash2 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Suspense } from "react"
+import { Loading } from "@/components/loading"
 
-export default function InvestorPitchPage() {
+function InvestorPitchContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
 
   const handleUpload = () => {
@@ -94,5 +97,13 @@ export default function InvestorPitchPage() {
         </div>
       </ScrollArea>
     </div>
+  )
+}
+
+export default function InvestorPitchPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <InvestorPitchContent />
+    </Suspense>
   )
 } 

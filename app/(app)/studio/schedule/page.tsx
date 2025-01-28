@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Check, AlertCircle, Calendar as CalendarIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar"
@@ -12,6 +12,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { format } from "date-fns"
+import { Suspense } from "react"
+import { Loading } from "@/components/loading"
 
 const programSteps = [
   { id: 'details', title: 'Program Details', status: 'completed' },
@@ -24,8 +26,9 @@ const programSteps = [
   { id: 'schedule', title: 'Program Schedule', status: 'pending' },
 ] as const
 
-export default function SchedulePage() {
+function ScheduleContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [lastPitchDate, setLastPitchDate] = useState<Date>()
   const [launchDate, setLaunchDate] = useState<Date>()
 
@@ -132,5 +135,13 @@ export default function SchedulePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SchedulePage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ScheduleContent />
+    </Suspense>
   )
 } 

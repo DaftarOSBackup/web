@@ -1,4 +1,7 @@
 "use client"
+import { Suspense } from "react"
+import { useSearchParams } from "next/navigation"
+import { Loading } from "@/components/loading"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -126,7 +129,8 @@ const sectors = [
   "Transportation Network Companies"
 ]
 
-export default function PitchNamePage() {
+function PitchNameContent() {
+  const searchParams = useSearchParams()
   const [selectedSectors, setSelectedSectors] = useState<string[]>([])
 
   return (
@@ -209,10 +213,17 @@ export default function PitchNamePage() {
           </div>
         </div>
         <div className="flex justify-center">
-
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white">Save</Button>
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white">Save</Button>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PitchNamePage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <PitchNameContent />
+    </Suspense>
   )
 } 

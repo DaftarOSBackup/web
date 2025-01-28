@@ -4,6 +4,11 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Search, CheckCircle2, XCircle } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Suspense } from "react"
+import { useSearchParams } from "next/navigation"
+import { Loading } from "@/components/loading"
+import { withSearchParams } from "@/components/hoc/with-search-params"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
 // Sample data
 const approvalRequests = [
@@ -25,7 +30,8 @@ const approvalRequests = [
   }
 ]
 
-export default function ApprovalPage() {
+function ApprovalContent() {
+  const { mode, programId } = usePageParams()
   return (
     <div className="space-y-6 container mx-auto px-4">
       {/* Agreement Section */}
@@ -66,4 +72,14 @@ export default function ApprovalPage() {
       </div>
     </div>
   )
-} 
+}
+
+function ApprovalPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ApprovalContent />
+    </Suspense>
+  )
+}
+
+export default withSearchParams(ApprovalPage) 

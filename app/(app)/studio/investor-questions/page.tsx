@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
 const questions = [
   {
@@ -36,6 +37,7 @@ const languages = [
 ]
 
 export default function InvestorQuestionsPage() {
+  const { mode, programId } = usePageParams()
   const [video, setVideo] = useState<File | null>(null)
   const [language, setLanguage] = useState("")
 

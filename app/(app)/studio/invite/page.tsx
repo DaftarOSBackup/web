@@ -1,8 +1,11 @@
 "use client"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Upload, Download, Eye, Trash2 } from "lucide-react"
+import { Suspense } from "react"
+import { Loading } from "@/components/loading"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
 interface UploadedFile {
   id: string
@@ -11,9 +14,11 @@ interface UploadedFile {
   uploadedAt: string
 }
 
-export default function InvitePage() {
+function InviteContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [files, setFiles] = useState<UploadedFile[]>([])
+  const { mode, programId } = usePageParams()
 
   const handleUpload = () => {
     const input = document.createElement('input')
@@ -157,5 +162,13 @@ export default function InvitePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function InvitePage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <InviteContent />
+    </Suspense>
   )
 } 
