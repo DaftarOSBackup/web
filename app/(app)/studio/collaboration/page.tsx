@@ -1,6 +1,8 @@
 "use client"
-import { useState, useEffect } from "react"
+import { Suspense } from "react"
 import { useSearchParams } from "next/navigation"
+import { Loading } from "@/components/loading"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -78,7 +80,7 @@ interface CollaborationDetails {
   // Add other fields
 }
 
-export default function CollaborationPage() {
+function CollaborationContent() {
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
   const programId = searchParams.get('programId')
@@ -227,5 +229,13 @@ export default function CollaborationPage() {
         </Button>
       </div>
     </div>
+  )
+}
+
+export default function CollaborationPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <CollaborationContent />
+    </Suspense>
   )
 } 

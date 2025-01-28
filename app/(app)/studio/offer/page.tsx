@@ -4,6 +4,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Clock } from "lucide-react"
+import { Suspense } from "react"
+import { useSearchParams } from "next/navigation"
+import { Loading } from "@/components/loading"
 
 const pitchHistory = [
   {
@@ -53,7 +56,8 @@ const pitchHistory = [
   }
 ]
 
-export default function OfferPage() {
+function OfferContent() {
+  const searchParams = useSearchParams()
   return (
     <div className="space-y-6 container mx-auto px-4">
       <ScrollArea className="h-[calc(100vh-7rem)]">
@@ -165,5 +169,13 @@ export default function OfferPage() {
         </div>
     </ScrollArea>
     </div>
+  )
+}
+
+export default function OfferPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <OfferContent />
+    </Suspense>
   )
 } 

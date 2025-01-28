@@ -1,6 +1,8 @@
 "use client"
-import { useState, useEffect } from "react"
+import { Suspense } from "react"
 import { useSearchParams } from "next/navigation"
+import { Loading } from "@/components/loading"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,7 +26,7 @@ interface AudienceDetails {
   stages: string[]
 }
 
-export default function AudiencePage() {
+function AudienceContent() {
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
   const programId = searchParams.get('programId')
@@ -330,5 +332,13 @@ export default function AudiencePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function AudiencePage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <AudienceContent />
+    </Suspense>
   )
 } 

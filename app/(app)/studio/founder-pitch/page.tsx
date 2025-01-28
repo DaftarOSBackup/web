@@ -1,10 +1,11 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Play } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { QuestionsDialog } from "@/components/dialogs/questions-dialog"
+import { Loading } from "@/components/loading"
 
 const sampleQuestions = [
   "What problem are you solving?",
@@ -17,8 +18,9 @@ const sampleQuestions = [
   "What are your key metrics?",
 ]
 
-export default function FounderPitchPage() {
+function FounderPitchContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [questionsOpen, setQuestionsOpen] = useState(false)
 
   const handleSave = () => {
@@ -126,5 +128,13 @@ export default function FounderPitchPage() {
         onOpenChange={setQuestionsOpen}
       />
     </div>
+  )
+}
+
+export default function FounderPitchPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <FounderPitchContent />
+    </Suspense>
   )
 } 

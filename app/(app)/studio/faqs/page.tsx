@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Plus, Scroll, Trash2 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Suspense } from "react"
+import { Loading } from "@/components/loading"
 
 interface FAQ {
   id: string
@@ -18,7 +20,7 @@ interface FAQsDetails {
   faqs: FAQ[]
 }
 
-export default function FAQsPage() {
+function FaqsContent() {
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
   const programId = searchParams.get('programId')
@@ -165,5 +167,13 @@ export default function FAQsPage() {
       </ScrollArea>
     </ScrollArea>
     </div>
+  )
+}
+
+export default function FaqsPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <FaqsContent />
+    </Suspense>
   )
 } 

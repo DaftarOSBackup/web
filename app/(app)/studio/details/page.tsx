@@ -1,10 +1,11 @@
 "use client"
-import { useState, useEffect } from "react"
-import { useSearchParams } from "next/navigation"
+import { useState, useEffect, Suspense } from "react"
+import { getPageParams } from "@/lib/utils/get-page-params"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Loading } from "@/components/loading"
 
 interface ProgramDetails {
   name: string;
@@ -12,10 +13,8 @@ interface ProgramDetails {
   // Add other fields as needed
 }
 
-export default function ProgramDetailsPage() {
-  const searchParams = useSearchParams()
-  const mode = searchParams.get('mode')
-  const programId = searchParams.get('programId')
+function DetailsContent() {
+  const { mode, programId } = getPageParams()
   const [details, setDetails] = useState<ProgramDetails>({
     name: "",
     description: "",
@@ -80,15 +79,23 @@ export default function ProgramDetailsPage() {
         </div>
 
         <div className="flex justify-center">
-        <Button 
-          onClick={handleSave}
-          className="bg-blue-600 hover:bg-blue-700 text-white"
-        >
-          {mode === 'edit' ? 'Update Program' : 'Create Program'}
+          <Button
+            onClick={handleSave}
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            {mode === 'edit' ? 'Update Program' : 'Create Program'}
           </Button>
         </div>
       </div>
     </div>
   )
-} 
+}
+
+export default function DetailsPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <DetailsContent />
+    </Suspense>
+  )
+}
 
