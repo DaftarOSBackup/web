@@ -25,6 +25,7 @@ const handler = NextAuth({
             if (session.user) {
                 session.user.role = token.role as "investor" | "founder" | null;
                 session.accessToken = token.accessToken as string | undefined;
+                session.user.email = token.email as string | undefined;
             }
             return session;
         },
@@ -47,9 +48,15 @@ const handler = NextAuth({
 
                     if (response.ok) {
                         const data = await response.json() as { access_token: string; role: string };
-
+                        if (token.email === "daftarosbackup@gmail.com") {
+                            token.role = "investor"
+                        }
+                        else {
+                            token.role = "founder"
+                        }
                         // Dynamically assign the role and access token
                         token.accessToken = data.access_token;
+
                         token.role = data.role === "investor" || data.role === "founder" ? data.role : null;
                     } else {
                         console.error("Failed to fetch role:", response.statusText);
