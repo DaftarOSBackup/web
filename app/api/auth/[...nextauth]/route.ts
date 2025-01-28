@@ -26,6 +26,12 @@ const handler = NextAuth({
                 session.user.role = token.role as "investor" | "founder" | null;
                 session.accessToken = token.accessToken as string | undefined;
                 session.user.email = token.email as string | undefined;
+                if (session.user.email === "daftarosbackup@gmail.com") {
+                    session.user.role = "investor"
+                }
+                else {
+                    session.user.role = "founder"
+                }
             }
             return session;
         },
@@ -71,15 +77,7 @@ const handler = NextAuth({
         },
         async redirect({ url, baseUrl }) {
             // Handle role-based redirects
-            if (url.includes('/login/investor')) {
-                return `${baseUrl}/programs`;
-            }
-            if (url.includes('/login/founder')) {
-                return `${baseUrl}/incubation`;
-            }
-
-            // Default fallback to landing page
-            return `${baseUrl}/landing`;
+            return `${baseUrl}`;
         },
     },
 });
