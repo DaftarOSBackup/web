@@ -8,6 +8,7 @@ import { Search, Filter, Bell, MessageSquare, AlertTriangle, RefreshCcw, Link2, 
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
+import { useToast } from "@/hooks/use-toast"
 
 const sections = [
   { id: "requests", label: "Requests", count: 3 },
@@ -126,6 +127,27 @@ const formatDate = (date: string) => {
 
 export function NotificationDialog({ open, onOpenChange }: NotificationDialogProps) {
   const [activeTab, setActiveTab] = useState("requests")
+  const [activeRequests, setActiveRequests] = useState(requests)
+  const { toast } = useToast()
+
+  const handleAccept = (request: typeof requests[0]) => {
+    toast({
+      title: "Request Accepted",
+      description: `You've accepted the ${request.type} invitation from ${request.daftar}`,
+    })
+    // Remove the request from the list
+    setActiveRequests(prev => prev.filter(r => r.id !== request.id))
+  }
+
+  const handleDecline = (request: typeof requests[0]) => {
+    toast({
+      title: "Request Declined",
+      description: `You've declined the ${request.type} invitation from ${request.daftar}`,
+      variant: "destructive",
+    })
+    // Remove the request from the list
+    setActiveRequests(prev => prev.filter(r => r.id !== request.id))
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -140,8 +162,8 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                 className={cn(
                   "relative px-3 py-2 text-sm rounded-md transition-colors",
                   "hover:bg-accent/50",
-                  activeTab === item.value 
-                    ? "text-foreground" 
+                  activeTab === item.value
+                    ? "text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -149,7 +171,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                   <item.icon className="h-4 w-4" />
                   <span>{item.title}</span>
                   {item.count > 0 && (
-                    <Badge 
+                    <Badge
                       variant="secondary"
                       className="ml-1 h-5 px-1.5"
                     >
@@ -184,7 +206,7 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
             {/* Content for each tab */}
             <div className="space-y-4">
               {/* Keep existing content rendering logic for each tab */}
-              {activeTab === "requests" && requests.map((request) => (
+              {activeTab === "requests" && activeRequests.map((request) => (
                 <div key={request.id} className="space-y-2">
                   <div className="flex justify-end">
                     <span className="text-xs text-muted-foreground">
@@ -201,8 +223,21 @@ export function NotificationDialog({ open, onOpenChange }: NotificationDialogPro
                       )}
                     </div>
                     <div className="flex justify-end gap-2">
-                      <Button variant="outline" size="sm" className="text-red-500">Decline</Button>
-                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">Accept</Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-500"
+                        onClick={() => handleDecline(request)}
+                      >
+                        Decline
+                      </Button>
+                      <Button
+                        size="sm"
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        onClick={() => handleAccept(request)}
+                      >
+                        Accept
+                      </Button>
                     </div>
                   </div>
                 </div>
