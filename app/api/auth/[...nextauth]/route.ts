@@ -32,7 +32,7 @@ const handler = NextAuth({
             if (account && profile) {
                 try {
                     // Determine which API to call dynamically
-                    const endpoint = `https://888c-14-139-122-17.ngrok-free.app/auth/get-role/`;
+                    const endpoint = `https://2939-14-139-122-17.ngrok-free.app/auth/get-role/`;
 
                     // Call the API to determine the user's role
                     const response = await fetch(endpoint, {

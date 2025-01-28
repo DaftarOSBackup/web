@@ -24,7 +24,7 @@ interface ApiClientOptions {
     params?: Record<string, string>;
 }
 
-const baseUrl = "https://888c-14-139-122-17.ngrok-free.app";
+const baseUrl = "https://2939-14-139-122-17.ngrok-free.app";
 
 
 export async function apiClient(endpoint: string, options: ApiClientOptions = {}) {
