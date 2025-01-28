@@ -1,8 +1,8 @@
 "use client"
-import { getPageParams } from "@/lib/utils/get-page-params"
+import { useUrlParams } from "@/lib/utils/get-url-params"
 
 export default function StudioPage() {
-  const { mode, programId } = getPageParams()
+  const { mode, programId } = useUrlParams()
 
   // Debug log
   console.log("Studio Page Params:", { mode, programId })

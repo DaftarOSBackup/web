@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { Upload, Download, Eye, Trash2 } from "lucide-react"
 import { Suspense } from "react"
 import { Loading } from "@/components/loading"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
 interface UploadedFile {
   id: string
@@ -17,6 +18,7 @@ function InviteContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [files, setFiles] = useState<UploadedFile[]>([])
+  const { mode, programId } = usePageParams()
 
   const handleUpload = () => {
     const input = document.createElement('input')

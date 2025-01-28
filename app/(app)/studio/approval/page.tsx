@@ -8,7 +8,7 @@ import { Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Loading } from "@/components/loading"
 import { withSearchParams } from "@/components/hoc/with-search-params"
-import { getPageParams } from "@/lib/utils/get-page-params"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
 // Sample data
 const approvalRequests = [
@@ -31,7 +31,7 @@ const approvalRequests = [
 ]
 
 function ApprovalContent() {
-  const { mode, programId } = getPageParams()
+  const { mode, programId } = usePageParams()
   return (
     <div className="space-y-6 container mx-auto px-4">
       {/* Agreement Section */}

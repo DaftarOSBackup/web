@@ -4,8 +4,10 @@ import { Loading } from "@/components/loading"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Upload } from "lucide-react"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
 function DocumentsContent() {
+  const { mode, programId } = usePageParams()
   return (
     <div className="space-y-6 container mx-auto px-4">
       <div>

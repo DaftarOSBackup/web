@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { ScheduleMeetingDialog } from "@/components/dialogs/schedule-meeting-dialog"
 import { Suspense } from "react"
-import { getPageParams } from "@/lib/utils/get-page-params"
+import { usePageParams } from "@/lib/utils/get-page-params"
 import { Loading } from "@/components/loading"
 
 interface MeetingDetails {
@@ -47,7 +47,7 @@ const pitchDetails = {
 }
 
 function MeetingsContent() {
-    const { mode, programId } = getPageParams()
+    const { mode, programId } = usePageParams()
     const [selectedMeeting, setSelectedMeeting] = useState<string | null>(null)
     const [selectedMeetingDetails, setSelectedMeetingDetails] = useState<MeetingDetails | null>(null)
     const [scheduleMeetingOpen, setScheduleMeetingOpen] = useState(false)

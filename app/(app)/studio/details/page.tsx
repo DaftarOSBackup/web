@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect, Suspense } from "react"
-import { getPageParams } from "@/lib/utils/get-page-params"
+import { useUrlParams } from "@/lib/utils/get-url-params"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -14,7 +14,7 @@ interface ProgramDetails {
 }
 
 function DetailsContent() {
-  const { mode, programId } = getPageParams()
+  const { mode, programId } = useUrlParams()
   const [details, setDetails] = useState<ProgramDetails>({
     name: "",
     description: "",

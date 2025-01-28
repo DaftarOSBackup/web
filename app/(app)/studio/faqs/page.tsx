@@ -9,6 +9,7 @@ import { Plus, Scroll, Trash2 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Suspense } from "react"
 import { Loading } from "@/components/loading"
+import { usePageParams } from "@/lib/utils/get-page-params"
 
 interface FAQ {
   id: string
@@ -21,9 +22,8 @@ interface FAQsDetails {
 }
 
 function FaqsContent() {
+  const { mode, programId } = usePageParams()
   const searchParams = useSearchParams()
-  const mode = searchParams.get('mode')
-  const programId = searchParams.get('programId')
   const [details, setDetails] = useState<FAQsDetails>({
     faqs: []
   })
